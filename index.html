@@ -3,16 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gia Shield: Retail Access to Lloyd's Green Bonds</title>
+    <title>Gia Shield: Breaking Down Lloyd's Gates with Technology</title>
     <!-- Chosen Palette: Elemental Force (Earth, Wind, Fire, Water) -->
-    <!-- Application Structure Plan: A single-page, vertical-scrolling layout with a sticky navigation bar was chosen to guide the user through the business proposal in a logical narrative flow, from the high-level vision to the specific details of the ask. This structure is more engaging than a slide deck and allows users to explore sections at their own pace. The sections are thematically grouped (Opportunity, Product, Financials) rather than mirroring the original slide order, which improves clarity and usability. A new "Bespoke Edge" section has been added to highlight the core value proposition of proprietary tech and in-house expertise. Key interactions include interactive charts for data visualization and a clickable timeline for the roadmap. -->
-    <!-- Visualization & Content Choices:
-        - Market Growth (UCITS Funds): Report Info -> Goal: Show market validation -> Viz: Bar Chart -> Interaction: Persistent data labels -> Justification: Visually demonstrates strong market growth trend with key figures immediately visible -> Library: Chart.js/Canvas + chartjs-plugin-datalabels.
-        - AUM Projections: Report Info -> Goal: Illustrate growth potential -> Viz: Bar Chart -> Interaction: Persistent data labels -> Justification: Clearly shows AUM growth targets over time -> Library: Chart.js/Canvas + chartjs-plugin-datalabels.
-        - Product Portfolio: Report Info -> Goal: Explain asset allocation -> Viz: Donut Chart -> Interaction: Persistent data labels -> Justification: Provides an immediate, easy-to-understand breakdown of the investment strategy -> Library: Chart.js/Canvas + chartjs-plugin-datalabels.
-        - How It Works Diagram: Report Info -> Goal: Clarify the business ecosystem -> Presentation: HTML/CSS Flow Diagram -> Interaction: Static visual -> Justification: A clean, text-based visual is clearer than a paragraph and avoids prohibited SVG/image files -> Method: Tailwind CSS Flexbox.
-        - Roadmap: Report Info -> Goal: Outline the launch plan -> Presentation: Vertical Timeline -> Interaction: None, clear visual progression -> Justification: Organizes time-based milestones in an intuitive, scannable format -> Method: HTML/CSS.
-    -->
+    <!-- Application Structure Plan: Single-page, vertical scroll focusing on the narrative flow of Gia Shield as a tech-enabled intermediary. Sections redesigned to highlight the Enhancement Engine and the dual-sided revenue model. -->
+    <!-- Visualization & Content Choices: Charts for market data and projections. Flow diagrams and structured text used to explain the GIA Engine and business model. Comparison table added. Roadmap updated. Risk section maintained. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -33,8 +27,11 @@
             --border-color: #E0E0E0;
             --stroke: rgba(0,0,0,.08);
             --shadow: 0 10px 25px rgba(0,0,0,.05);
-            --radius: 18px;
+            --radius: 12px; /* Slightly smaller radius */
+            --purple: #6A1B9A; /* Added purple for AI Compliance */
+            --purple-light: #F3E5F5;
         }
+        html { scroll-padding-top: 80px; /* Adjust for sticky header height */ }
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--wind);
@@ -52,8 +49,8 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-            height: 300px; /* Adjusted base height for mobile */
-            max-height: 350px; /* Adjusted max height for mobile */
+            height: 300px;
+            max-height: 350px;
         }
         @media (min-width: 768px) {
             .chart-container {
@@ -64,181 +61,32 @@
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -30px; top: 4px;
-            width: 20px; height: 20px;
+            left: -26px; /* Adjusted */
+            top: 4px;
+            width: 16px; /* Adjusted */
+            height: 16px; /* Adjusted */
             border-radius: 50%;
             background-color: var(--water);
-            border: 4px solid var(--wind);
+            border: 3px solid var(--wind); /* Adjusted */
         }
         /* Basic mobile nav toggle */
-        #menu-toggle:checked + #mobile-menu {
-            display: block;
-        }
-        
-        /* New GIA Engine Diagram Styles (Adapted from user code) */
-        /* Mobile-first approach for the flow diagram */
-        .flow {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            align-items: center;
-        }
+        #menu-toggle:checked + #mobile-menu { display: block; }
 
-        .flow-card {
-            background: #ffffff;
-            border: 1px solid var(--stroke);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 18px 18px 16px;
-            width: 100%;
-            max-width: 400px;
+        /* Table styles */
+        .comparison-table th, .comparison-table td {
+            padding: 0.75rem 1rem;
+            vertical-align: top;
+            text-align: center;
         }
-
-        .flow-card h3 { margin: .1rem 0 .25rem; font-size: 18px; letter-spacing: .2px; }
-        .eyebrow { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-light); }
-        .lead { font-size: 14px; color: var(--text-light); margin-top: .25rem; }
-
-        /* Specific cards */
-        .supply {
-            border-color: var(--earth-dark);
-            background: linear-gradient(180deg, #ffffff, #f7f9f7);
+        .comparison-table th:first-child, .comparison-table td:first-child {
+             text-align: left;
         }
-        .engine {
-            background: var(--earth-light);
-            border-color: var(--earth-dark);
-            border-width: 2px;
-            position: relative;
-        }
-        .demand {
-            border-color: var(--water);
-            background: linear-gradient(180deg, #ffffff, #f7f7f9);
-        }
-
-        /* Pillars inside engine */
-        .pillars { margin-top: 12px; display: grid; gap: 10px; }
-        .pillar {
-            background: #ffffff;
-            border: 1px solid rgba(0, 77, 64, .2);
-            border-radius: 12px; 
-            padding: 10px 12px;
-            font-size: 14px;
-            color: var(--text-dark);
-        }
-        .pillar b { display: block; font-weight: 700; color: var(--earth-dark); }
-
-        .engine::before {
-            content: "GIA INTELLIGENCE RISK ENGINE";
-            position: absolute; 
-            top: -12px; 
-            left: 50%; 
-            transform: translateX(-50%);
-            background: var(--earth-dark);
-            color: white;
-            font-weight: 800; 
-            font-size: 10px; 
-            letter-spacing: .14em;
-            padding: 6px 12px; 
-            border-radius: 999px;
-            box-shadow: 0 6px 16px rgba(0, 77, 64, .25);
+        .comparison-table thead th {
+            font-weight: bold;
             white-space: nowrap;
         }
-
-        /* Simple mobile arrows - vertical pointing down */
-        .arrow {
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            height: 40px;
-        }
-
-        .arrow svg { 
-            width: 32px; 
-            height: 32px; 
-            opacity: .7;
-            transform: rotate(90deg); /* Point downward */
-        }
-
-        .arrow.in svg path { stroke: var(--earth-dark); }
-        .arrow.out svg path { stroke: var(--water); }
-
-        /* Desktop layout - only apply on larger screens */
-        @media (min-width: 860px) {
-            .flow {
-                display: grid;
-                grid-template-columns: 1fr minmax(320px, 420px) 1fr;
-                grid-template-rows: auto auto auto;
-                gap: 18px 40px;
-                align-items: stretch;
-            }
-            
-            .supply {
-                grid-column: 1;
-                grid-row: 1;
-            }
-            
-            .engine {
-                grid-column: 2;
-                grid-row: 1 / span 3;
-            }
-            
-            .demand {
-                grid-column: 3;
-                grid-row: 3;
-            }
-            
-            .arrow.in {
-                grid-column: 1;
-                grid-row: 2;
-                height: auto;
-            }
-            
-            .arrow.out {
-                grid-column: 3;
-                grid-row: 2;
-                height: auto;
-            }
-            
-            .arrow svg {
-                width: 72px;
-                height: 72px;
-                transform: none; /* Horizontal arrows on desktop */
-            }
-            
-            .engine::before {
-                font-size: 12px;
-            }
-        }
-
-        /* Enhancement rail */
-        .rail {
-            margin-top: 18px;
-            background: #ffffff;
-            border: 1px dashed var(--border-color);
-            border-radius: 14px;
-            padding: 14px 16px;
-            display: grid; gap: 6px;
-        }
-        .rail .title {
-            font-size: 13px; letter-spacing: .14em; text-transform: uppercase;
-            color: var(--text-light);
-        }
-        .rail .body { font-size: 14px; color: var(--text-dark); }
-        .chip {
-            display: inline-block; font-size: 12px; padding: 6px 10px; border-radius: 999px;
-            border: 1px solid var(--border-color); background: var(--wind); margin-right: 8px;
-            margin-bottom: 6px;
-        }
-
-        /* Badges for color hints */
-        .badge { height: 10px; width: 10px; border-radius: 999px; display: inline-block; margin-right: 8px; }
-        .badge.input { background: var(--earth-dark); }
-        .badge.accent { background: var(--earth-dark); }
-        .badge.output { background: var(--water); }
-
-        /* Removed list style from founder expertise */
-        .founder-expertise-list {
-            list-style: none;
-            padding-left: 0;
+        .comparison-table tbody tr:nth-child(odd) {
+            background-color: #f9fafb; /* gray-50 */
         }
 
     </style>
@@ -250,15 +98,17 @@
         <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
             <a href="#" class="text-xl font-bold text-[var(--earth-dark)]">Gia Shield</a>
             <!-- Desktop Menu -->
-            <div class="hidden md:flex space-x-6 lg:space-x-8">
-                <a href="#opportunity" class="nav-link font-medium text-sm lg:text-base">Opportunity</a>
-                <a href="#how-model" class="nav-link font-medium text-sm lg:text-base">How It Works</a>
-                <a href="#edge" class="nav-link font-medium text-sm lg:text-base">Our Edge</a>
-                <a href="#product" class="nav-link font-medium text-sm lg:text-base">Product</a>
-                <a href="#financials" class="nav-link font-medium text-sm lg:text-base">Financials</a>
-                <a href="#risks" class="nav-link font-medium text-[var(--fire)] hover:text-[var(--fire-hover)] text-sm lg:text-base">Risks</a>
-                <a href="#roadmap" class="nav-link font-medium text-sm lg:text-base">Roadmap</a>
-                <a href="#contact" class="nav-link font-medium text-sm lg:text-base">Contact</a>
+            <div class="hidden md:flex space-x-5 lg:space-x-6 text-sm lg:text-base">
+                <a href="#opportunity" class="nav-link font-medium">Opportunity</a>
+                <a href="#how-model" class="nav-link font-medium">How It Works</a>
+                <a href="#ai-matters" class="nav-link font-medium">Why Tech Matters</a>
+                <a href="#edge" class="nav-link font-medium">Our Edge</a>
+                <a href="#product" class="nav-link font-medium">Product</a>
+                <a href="#financials" class="nav-link font-medium">Financials</a>
+                <a href="#competition" class="nav-link font-medium">Competition</a>
+                <a href="#risks" class="nav-link font-medium text-[var(--fire)] hover:text-[var(--fire-hover)]">Risks</a>
+                <a href="#roadmap" class="nav-link font-medium">Roadmap</a>
+                <a href="#contact" class="nav-link font-medium">Contact</a>
             </div>
             <!-- Mobile Menu Button -->
             <div class="md:hidden flex items-center">
@@ -272,9 +122,11 @@
         <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-md absolute top-full left-0 w-full border-b border-[var(--border-color)] py-2 z-40">
             <a href="#opportunity" class="block px-6 py-2 text-gray-700 hover:bg-gray-100">Opportunity</a>
             <a href="#how-model" class="block px-6 py-2 text-gray-700 hover:bg-gray-100">How It Works</a>
+            <a href="#ai-matters" class="block px-6 py-2 text-gray-700 hover:bg-gray-100">Why Tech Matters</a>
             <a href="#edge" class="block px-6 py-2 text-gray-700 hover:bg-gray-100">Our Edge</a>
             <a href="#product" class="block px-6 py-2 text-gray-700 hover:bg-gray-100">Product</a>
             <a href="#financials" class="block px-6 py-2 text-gray-700 hover:bg-gray-100">Financials</a>
+            <a href="#competition" class="block px-6 py-2 text-gray-700 hover:bg-gray-100">Competition</a>
             <a href="#risks" class="block px-6 py-2 text-[var(--fire)] hover:bg-red-50">Risks</a>
             <a href="#roadmap" class="block px-6 py-2 text-gray-700 hover:bg-gray-100">Roadmap</a>
             <a href="#contact" class="block px-6 py-2 text-gray-700 hover:bg-gray-100">Contact</a>
@@ -282,74 +134,107 @@
     </header>
 
     <main id="main-content">
+
         <!-- Hero -->
-        <section class="py-16 md:py-32">
+        <section class="py-16 md:py-24">
           <div class="container mx-auto px-4 sm:px-6 text-center">
-            <p class="text-base md:text-xl font-semibold text-[var(--text-light)]">Lloyd's Lab Alumni | Insurance-Linked Securities Platform</p>
-            <h1 class="text-3xl sm:text-4xl md:text-6xl font-extrabold text-[var(--earth-dark)] leading-tight mt-4">Gia Shield: The Table Where Retail Meets Lloyd's Green Bonds</h1>
-            <p class="mt-4 text-base md:text-xl max-w-3xl mx-auto text-[var(--text-light)]">The first retail platform making Lloyd's green bonds accessible, transparent, and engaging. We're not the fund; we're the infrastructure that makes it possible.</p>
+            <p class="text-base md:text-xl font-semibold text-[var(--text-light)]">Lloyd's Lab Alumni | Technology-Enabled Intermediary</p>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[var(--earth-dark)] leading-tight mt-4">Gia Shield: Breaking Down Lloyd's Gates with Technology</h1>
+             <!-- REVISED INTRO PARAGRAPH -->
+             <p class="mt-6 text-base md:text-xl max-w-3xl mx-auto text-[var(--text-light)]">
+                 We're the tech layer connecting Lloyd's green risks to retail investors. Syndicates have capacity. Retail investors have capital *and* care about protecting the Earth. We built the engine connecting Lloyd's to capital and retail investors to protecting the planet.
+             </p>
 
-            <!-- New Hero Proposition Block -->
-            <div class="mt-8 max-w-4xl mx-auto">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 text-left">
-                    <!-- Best Case -->
-                    <div class="bg-[var(--earth-light)] p-4 md:p-6 rounded-lg border-2 border-[var(--earth-dark)]">
-                        <h4 class="font-bold text-base md:text-lg text-[var(--earth-dark)] mb-2">Best Case (98% Probability)</h4>
-                        <p class="text-sm md:text-base text-[var(--text-dark)]">You earn a <strong>7% return</strong>, paid in monthly coupons. Your capital successfully protected vital green infrastructure.</p>
-                        <p class="font-bold text-[var(--earth-dark)] text-base md:text-lg mt-3">Total Return: 7.0%</p>
-                    </div>
-                    <!-- Worst Case -->
-                    <div class="bg-red-50 p-4 md:p-6 rounded-lg border-2 border-red-300">
-                         <h4 class="font-bold text-base md:text-lg text-red-800 mb-2">Worst Case (2% Probability)</h4>
-                         <p class="text-sm md:text-base text-red-800">A parametric trigger is met. You lose your principal, but your money is <strong>immediately deployed</strong> to help communities recover.</p>
-                         <p class="font-bold text-red-800 text-base md:text-lg mt-3">Net Loss: -95.3%*</p>
-                    </div>
-                </div>
-                <p class="text-xs text-center text-[var(--text-light)] mt-4">*Example based on trigger in month 8. Your money does good either way. Zero fees for investors.</p>
-            </div>
-
-            <div class="mt-8 md:mt-10">
-              <a href="#how-model" class="inline-flex items-center gap-2 bg-[var(--fire)] text-white font-bold py-3 px-6 md:px-8 rounded-full hover:bg-[var(--fire-hover)] transition-transform transform hover:scale-105" aria-label="See how it works">
-                See How It Works
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+            <div class="mt-10 md:mt-12">
+              <a href="#edge" class="inline-flex items-center gap-2 bg-[var(--fire)] text-white font-bold py-3 px-6 md:px-8 rounded-full hover:bg-[var(--fire-hover)] transition-transform transform hover:scale-105">
+                See Our Technology
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
               </a>
             </div>
           </div>
         </section>
 
+
         <!-- The Opportunity Section -->
         <section id="opportunity" class="py-16 md:py-20 bg-white">
             <div class="container mx-auto px-4 sm:px-6">
                 <div class="text-center mb-10 md:mb-12">
-                    <h2 class="text-2xl md:text-4xl font-bold">The Opportunity is Now</h2>
-                    <p class="mt-3 md:mt-4 max-w-3xl mx-auto text-[var(--text-light)] text-base md:text-lg">A convergence of market demand, a clear gap for accessible products, and strategic alignment with Lloyd's creates a unique moment to launch.</p>
+                    <h2 class="text-2xl md:text-4xl font-bold">The Problem & Opportunity</h2>
+                    <p class="mt-3 md:mt-4 max-w-3xl mx-auto text-[var(--text-light)] text-base md:text-lg">Lloyd's syndicates have green capacity. Retail investors have £300B in ISAs earning ~3.5%. But they can't connect.</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-center">
-                    <div class="stat-card p-6 md:p-8 rounded-xl shadow-sm">
-                        <h3 class="text-3xl md:text-4xl font-extrabold text-[var(--earth-dark)]">&#126;£300B</h3>
-                        <p class="mt-2 font-semibold text-base md:text-lg">Sitting in UK Cash ISAs</p>
-                        <p class="mt-2 text-xs md:text-sm text-[var(--text-light)]">Investors seek climate-aligned alternatives.</p>
+                 <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-center text-sm md:text-base mb-10 md:mb-12">
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <h4 class="font-bold mb-2 text-red-700">Why Syndicates Struggle</h4>
+                        <p>Don't understand retail; too fragmented, too much compliance hassle.</p>
                     </div>
-                    <div class="stat-card p-6 md:p-8 rounded-xl shadow-sm">
-                        <h3 class="text-3xl md:text-4xl font-extrabold text-[var(--earth-dark)]">Market Gap</h3>
-                        <p class="mt-2 font-semibold text-base md:text-lg">No Retail Access</p>
-                        <p class="mt-2 text-xs md:text-sm text-[var(--text-light)]">No Lloyd's specific green bonds for retail.</p>
+                     <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <h4 class="font-bold mb-2 text-red-700">Why Retail Struggles</h4>
+                        <p>Can't access Lloyd's (£100K+ minimums, no platform integration).</p>
                     </div>
-                    <div class="stat-card p-6 md:p-8 rounded-xl shadow-sm">
-                        <h3 class="text-3xl md:text-4xl font-extrabold text-[var(--earth-dark)]">ESG Push</h3>
-                        <p class="mt-2 font-semibold text-base md:text-lg">Lloyd's Strategic Goal</p>
-                        <p class="mt-2 text-xs md:text-sm text-[var(--text-light)]">Lloyd's seeks new ESG capital sources.</p>
+                     <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <h4 class="font-bold mb-2 text-red-700">Why No Bridge Exists</h4>
+                        <p>No one has the tech layer for data quality, pricing, and parametric design.</p>
+                    </div>
+                 </div>
+                 <p class="text-center text-base md:text-xl font-semibold max-w-3xl mx-auto">The missing piece: A technology layer that makes Lloyd's capacity retail-ready.</p>
+
+
+                <div class="mt-12 md:mt-16">
+                    <h3 class="text-xl md:text-2xl font-bold text-center mb-4">Supportive Market Conditions</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-center mt-6">
+                        <div class="stat-card p-6 md:p-8 rounded-xl shadow-sm">
+                            <h4 class="text-3xl md:text-4xl font-extrabold text-[var(--earth-dark)]">&#126;£300B</h4>
+                            <p class="mt-2 font-semibold text-base md:text-lg">In UK Cash ISAs</p>
+                            <p class="mt-2 text-xs md:text-sm text-[var(--text-light)]">Seeking better, impactful returns.</p>
+                        </div>
+                        <div class="stat-card p-6 md:p-8 rounded-xl shadow-sm">
+                            <h4 class="text-3xl md:text-4xl font-extrabold text-[var(--earth-dark)]">Market Gap</h4>
+                            <p class="mt-2 font-semibold text-base md:text-lg">No Retail Access</p>
+                            <p class="mt-2 text-xs md:text-sm text-[var(--text-light)]">To Lloyd's specific green bonds.</p>
+                        </div>
+                        <div class="stat-card p-6 md:p-8 rounded-xl shadow-sm">
+                            <h4 class="text-3xl md:text-4xl font-extrabold text-[var(--earth-dark)]">ESG Push</h4>
+                            <p class="mt-2 font-semibold text-base md:text-lg">Lloyd's Strategic Goal</p>
+                            <p class="mt-2 text-xs md:text-sm text-[var(--text-light)]">Seeking new ESG capital sources.</p>
+                        </div>
                     </div>
                 </div>
 
                 <div class="mt-12 md:mt-16">
-                    <h3 class="text-xl md:text-2xl font-bold text-center mb-4">Proven Demand: Catastrophe Bond Market Growth</h3>
-                    <p class="text-center max-w-2xl mx-auto text-[var(--text-light)] mb-6 md:mb-8 text-sm md:text-base">Demand for similar insurance-linked securities is rapidly expanding, demonstrating strong investor appetite.</p>
+                    <h3 class="text-xl md:text-2xl font-bold text-center mb-4">Proven Demand: Cat Bond Market Growth</h3>
+                    <p class="text-center max-w-2xl mx-auto text-[var(--text-light)] mb-6 md:mb-8 text-sm md:text-base">Demand for similar insurance-linked securities is rapidly expanding.</p>
                     <div class="chart-container">
                         <canvas id="marketGrowthChart"></canvas>
                     </div>
                 </div>
+
+                <!-- Why Now? The AI Advantage Box -->
+                <div class="mt-12 max-w-4xl mx-auto p-6 md:p-8 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl shadow-xl">
+                  <h4 class="text-xl md:text-2xl font-bold mb-4">Why Now? The Technology Advantage</h4>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 text-sm">
+                    <div>
+                      <p class="font-semibold mb-2">Traditional cat bond platforms:</p>
+                      <ul class="space-y-1 opacity-90 list-disc list-inside ml-4">
+                        <li>Manual risk selection</li>
+                        <li>Static actuarial pricing</li>
+                        <li>Reactive monitoring</li>
+                        <li>Expensive manual compliance</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <p class="font-semibold mb-2">Gia Shield advantage:</p>
+                      <ul class="space-y-1 opacity-90 list-disc list-inside ml-4">
+                        <li><strong>Tech-enhanced selection</strong> (1,000+ bonds analyzed)</li>
+                        <li><strong>ML dynamic pricing</strong> (15-20% more accurate)</li>
+                        <li><strong>Predictive monitoring</strong> (48-72hr early warning)</li>
+                        <li><strong>Automated compliance</strong> (90% cost reduction)</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <p class="mt-4 text-center text-sm font-semibold">We have an 18-24 month technical head start while competitors try to catch up.</p>
+                </div>
+
             </div>
         </section>
 
@@ -357,74 +242,84 @@
         <section id="how-model" class="py-16 md:py-20 bg-gradient-to-b from-white to-gray-50">
           <div class="container mx-auto px-4 sm:px-6">
             <div class="text-center mb-10 md:mb-12">
-              <h2 class="text-2xl md:text-4xl font-bold">How Gia Shield Works</h2>
-              <p class="mt-3 md:mt-4 max-w-3xl mx-auto text-[var(--text-light)] text-base md:text-lg">We connect retail investors to Lloyd's green bonds, providing monthly coupons and transparent outcomes.</p>
+              <h2 class="text-2xl md:text-4xl font-bold">Our Solution: The Tech-Enabled Intermediary</h2>
+               <p class="mt-3 md:mt-4 max-w-3xl mx-auto text-[var(--text-light)] text-base md:text-lg">We use technology to add value to both sides, making Lloyd's capacity retail-ready.</p>
             </div>
 
             <!-- The Three-Sided Model -->
             <div class="max-w-5xl mx-auto mb-12 md:mb-16">
-              <h3 class="text-xl md:text-2xl font-bold text-center mb-6 md:mb-8">The Three-Sided Platform</h3>
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <h3 class="text-xl md:text-2xl font-bold text-center mb-6 md:mb-8">How Value Flows</h3>
+               <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="bg-white p-6 rounded-lg shadow-md border-2 border-[var(--earth-dark)]">
-                  <h4 class="font-bold text-lg text-[var(--earth-dark)] mb-3">Lloyd's Syndicates & MGAs</h4>
-                  <p class="text-sm text-[var(--text-dark)] mb-4">Underwrite green risks.</p>
+                  <h4 class="font-bold text-lg text-[var(--earth-dark)] mb-3">For Syndicates</h4>
+                  <ul class="text-sm text-[var(--text-dark)] mb-4 space-y-1 list-disc list-inside">
+                     <li>Access £10M-£50M retail capital</li>
+                     <li>Tech cleans their data</li>
+                     <li>We handle retail compliance</li>
+                  </ul>
                   <p class="text-xs text-[var(--text-light)]">They pay us: <strong>0.60% fee</strong></p>
                 </div>
 
                 <div class="bg-[var(--earth-dark)] text-white p-6 rounded-lg shadow-md border-2 border-[var(--earth-dark)] relative mt-4 md:mt-0">
-                  <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[var(--fire)] text-white px-4 py-1 rounded-full text-xs font-bold">YOU ARE HERE</div>
-                  <h4 class="font-bold text-lg mb-3">Gia Shield Platform</h4>
-                  <p class="text-sm mb-4">Builds GIA Engine, dashboards, distribution.</p>
-                  <p class="text-xs opacity-90">Revenue: <strong>Distribution + Syndicate fees</strong></p>
+                  <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[var(--fire)] text-white px-4 py-1 rounded-full text-xs font-bold">GIA SHIELD</div>
+                  <h4 class="font-bold text-lg mb-3 pt-3">Enhancement Engine</h4>
+                  <p class="text-sm mb-4">AI data cleansing, ML pricing, Geospatial modeling, Parametric design, Portfolio construction.</p>
+                   <p class="text-xs opacity-90">Revenue: <strong>Dist. fees (0.50%) + Synd. fees (0.60%)</strong></p>
+                   <div class="mt-3 pt-3 border-t border-white/20">
+                     <p class="text-xs font-bold">Secret Sauce: Tech layer on Lloyd's data</p>
+                   </div>
                 </div>
 
-                <div class="bg-white p-6 rounded-lg shadow-md border-2 border-[var(--water)] mt-4 md:mt-0">
-                  <h4 class="font-bold text-lg text-[var(--water)] mb-3">Distribution Partners</h4>
-                  <p class="text-sm text-[var(--text-dark)] mb-4">Market to retail investors.</p>
+                 <div class="bg-white p-6 rounded-lg shadow-md border-2 border-[var(--water)] mt-4 md:mt-0">
+                  <h4 class="font-bold text-lg text-[var(--water)] mb-3">For Retail Platforms</h4>
+                   <ul class="text-sm text-[var(--text-dark)] mb-4 space-y-1 list-disc list-inside">
+                     <li>Get differentiated green bonds</li>
+                     <li>Plug-and-play API</li>
+                     <li>We handle compliance</li>
+                  </ul>
                   <p class="text-xs text-[var(--text-light)]">They pay us: <strong>0.50% fee</strong></p>
                 </div>
               </div>
-
-              <div class="mt-8 text-center p-4 md:p-6 bg-[var(--earth-light)] rounded-lg border border-[#B2DFDB]">
-                <p class="text-base md:text-lg font-bold text-[var(--earth-dark)]">Result: Retail investors pay £0 fees.</p>
-                <p class="text-sm text-[var(--text-dark)] mt-2">At £200M AUM: <strong>£2.2M annual revenue</strong></p>
-              </div>
             </div>
 
-            <!-- Investor Experience -->
+             <!-- Investor Experience -->
             <div class="max-w-4xl mx-auto">
-              <h3 class="text-xl md:text-2xl font-bold text-center mb-6 md:mb-8">What Investors Experience</h3>
+              <h3 class="text-xl md:text-2xl font-bold text-center mb-6 md:mb-8">For Retail Investors</h3>
 
               <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg mb-8">
-                <h4 class="text-lg md:text-xl font-bold text-center text-[var(--earth-dark)] mb-6">Your £1,000 Investment Timeline</h4>
+                 <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm md:text-base mb-6">
+                    <li class="flex items-start gap-2 p-3 bg-gray-50 rounded"><strong class="text-green-700 font-bold">✓</strong> Enhanced returns (ML pricing)</li>
+                    <li class="flex items-start gap-2 p-3 bg-gray-50 rounded"><strong class="text-green-700 font-bold">✓</strong> Zero fees</li>
+                    <li class="flex items-start gap-2 p-3 bg-gray-50 rounded"><strong class="text-green-700 font-bold">✓</strong> Real impact (Green + Parametric)</li>
+                    <li class="flex items-start gap-2 p-3 bg-gray-50 rounded"><strong class="text-green-700 font-bold">✓</strong> 98% probability of 7%+ returns</li>
+                 </ul>
 
+
+                <h4 class="text-lg md:text-xl font-bold text-center text-[var(--earth-dark)] mb-6">Your £1,000 Investment Timeline</h4>
                 <div class="space-y-4 mb-6">
-                  <div class="flex items-start gap-4">
+
+                   <div class="flex items-start gap-4">
                     <div class="bg-[var(--earth-dark)] text-white rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center font-bold flex-shrink-0 text-sm md:text-base">1</div>
                     <div>
-                      <p class="font-bold text-sm md:text-base">You Invest £1,000</p>
-                      <p class="text-xs md:text-sm text-[var(--text-light)]">Locked for 12 months backing a transparent <strong>parametric</strong> green bond (e.g., triggered by specific wind speed or flood depth).</p>
+                      <p class="font-bold text-sm md:text-base">Invest £1,000</p>
+                      <p class="text-xs md:text-sm text-[var(--text-light)]">Locked 12 months in a transparent parametric green bond.</p>
                     </div>
                   </div>
-
-                  <div class="flex items-start gap-4">
+                   <div class="flex items-start gap-4">
                     <div class="bg-[var(--earth-dark)] text-white rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center font-bold flex-shrink-0 text-sm md:text-base">2</div>
                     <div>
-                      <p class="font-bold text-sm md:text-base">Monthly Coupon Payments</p>
-                      <p class="text-xs md:text-sm text-[var(--text-light)]">Receive £5.83/month (£70 annually = 7% return).</p>
-                       <p class="text-xs text-[var(--text-light)] mt-1"><em>Innovation:</em> Traditional cat bonds pay at end; we pay monthly.</p>
+                      <p class="font-bold text-sm md:text-base">Monthly Coupons</p>
+                      <p class="text-xs md:text-sm text-[var(--text-light)]">Receive £5.83/month (7% return).</p>
                     </div>
                   </div>
-
-                  <div class="flex items-start gap-4">
+                   <div class="flex items-start gap-4">
                      <div class="bg-[var(--earth-dark)] text-white rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center font-bold flex-shrink-0 text-sm md:text-base">3</div>
                      <div>
                         <p class="font-bold text-sm md:text-base">End of 12 Months: Two Outcomes</p>
                     </div>
                   </div>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                   <div class="p-4 md:p-6 bg-[var(--earth-light)] border-2 border-[var(--earth-dark)] rounded-lg">
                     <h5 class="font-bold text-[var(--earth-dark)] text-base md:text-lg mb-2">Best Case (98%)</h5>
                     <ul class="text-xs md:text-sm space-y-1 text-[var(--earth-dark)]">
@@ -432,172 +327,240 @@
                       <li>Get £1,000 principal back</li>
                       <li><strong>Total: £1,070 (7% return)</strong></li>
                     </ul>
-                    <p class="text-xs text-[var(--text-dark)] mt-3 p-2 bg-white/50 rounded">Based on 20yr CAT data: 98 out of 100 yrs no trigger</p>
                   </div>
-
-                  <div class="p-4 md:p-6 bg-red-50 border-2 border-red-300 rounded-lg">
+                   <div class="p-4 md:p-6 bg-red-50 border-2 border-red-300 rounded-lg">
                     <h5 class="font-bold text-red-800 text-base md:text-lg mb-2">Worst Case (2%)</h5>
                     <ul class="text-xs md:text-sm space-y-1 text-red-800">
-                      <li>A parametric trigger is met (e.g., wind hits 100mph)</li>
-                      <li>Received £46.64 in coupons (e.g., 8 months)</li>
-                      <li>Lost £1,000 principal (used for payout)</li>
+                      <li>Parametric trigger met</li>
+                      <li>Received £46.64 coupons (e.g., 8 mo)</li>
+                      <li>Lost £1,000 principal</li>
                       <li><strong>Net loss: £953.36 (-95.3%)</strong></li>
-                      <li><strong>Your £1,000 helps families rebuild within 48 hours, as the payout is automatic and avoids the claims process.</strong></li>
+                      <li><strong>Your £1,000 helps families rebuild.</strong></li>
                     </ul>
-                     <p class="text-xs text-red-900 mt-3 p-2 bg-white/50 rounded">2 out of 100 yrs trigger events occur. Money does immediate good.</p>
                   </div>
-                </div>
-              </div>
-
-              <!-- Probability Chart -->
-              <div class="text-center mb-8">
-                <h4 class="text-lg md:text-xl font-bold mb-4">The Probability Split</h4>
-                <div class="chart-container h-64 md:h-80">
-                  <canvas id="probabilityChart" aria-label="98% no trigger vs 2% trigger probability"></canvas>
-                </div>
-              </div>
-
-              <!-- Key Features -->
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
-                <div class="text-center p-4 md:p-6 bg-white rounded-lg shadow-sm border border-gray-200">
-                  <p class="font-bold text-base md:text-lg text-[var(--earth-dark)]">Zero Fees</p>
-                  <p class="text-xs md:text-sm text-[var(--text-light)] mt-1">No fees for investors</p>
-                </div>
-
-                <div class="text-center p-4 md:p-6 bg-white rounded-lg shadow-sm border border-gray-200">
-                  <p class="font-bold text-base md:text-lg text-[var(--earth-dark)]">Monthly Income</p>
-                  <p class="text-xs md:text-sm text-[var(--text-light)] mt-1">See returns immediately</p>
-                </div>
-
-                <div class="text-center p-4 md:p-6 bg-white rounded-lg shadow-sm border border-gray-200">
-                  <p class="font-bold text-base md:text-lg text-[var(--earth-dark)]">Real Impact</p>
-                  <p class="text-xs md:text-sm text-[var(--text-light)] mt-1">Profit OR help people</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- Our Bespoke Edge Section -->
-        <section id="edge" class="py-16 md:py-20 bg-white">
-            <div class="container mx-auto px-4 sm:px-6">
-                <div class="text-center mb-10 md:mb-12">
-                    <h2 class="text-2xl md:text-4xl font-bold">Our Bespoke Edge: The GIA Intelligence Risk Engine</h2>
-                    <p class="mt-3 md:mt-4 max-w-3xl mx-auto text-[var(--text-light)] text-base md:text-lg">A professional, institutional-grade underwriting process for structuring high-quality parametric bonds.</p>
-                </div>
 
-                <!-- New GIA Engine Diagram (Adapted to Light Theme) -->
-                <div class="max-w-6xl mx-auto">
-                     <section class="flow" role="list">
-                         <!-- Supply -->
-                         <article class="flow-card supply" role="listitem" aria-label="Supply">
-                           <div class="eyebrow"><span class="badge input"></span>1. Supply</div>
-                           <h3>Access to green risk</h3>
-                           <p class="lead">Lloyd's Syndicates &amp; MGAs provide risk origination and capacity.</p>
-                         </article>
-
-                         <!-- Arrow in -->
-                         <div class="arrow in" aria-hidden="true">
-                           <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                             <path d="M4 32h40M32 48l12-16L32 16" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-                           </svg>
-                         </div>
-
-                         <!-- Demand -->
-                         <article class="flow-card demand" role="listitem" aria-label="Demand">
-                           <div class="eyebrow"><span class="badge output"></span>3. Demand</div>
-                           <h3>Retail & HNW Investors</h3>
-                           <p class="lead">Investors access transparent, 7% return, £0 fee green bonds.</p>
-                         </article>
-
-                         <!-- Engine (center column spans on desktop via grid placement) -->
-                         <article class="flow-card engine" style="grid-column: 1 / -1; grid-row: 2 / 3; @media (min-width: 860px) { grid-column: 2 / 3; grid-row: 1 / span 3; }">
-                           <div class="eyebrow"><span class="badge accent"></span>2. Process</div>
-                           <h3>Underwriting &amp; structuring parametric bonds</h3>
-                           <div class="pillars" aria-label="Four pillars">
-                             <div class="pillar"><b>Pillar 1  Actuarial Analysis</b> Loss distributions, attachment selection, expected loss &amp; margin.</div>
-                             <div class="pillar"><b>Pillar 2  CAT Modelling</b> Event frequency/severity, correlation, portfolio effects.</div>
-                             <div class="pillar"><b>Pillar 3  Geospatial Risk Monitoring</b> Real-time satellite, sensor, and third-party trigger feeds.</div>
-                             <div class="pillar"><b>Pillar 4  Disciplined Parametric Structuring</b> Trigger design, basis risk mitigation, investor safeguards.</div>
-                           </div>
-                         </article>
-
-                         <!-- Arrow out -->
-                         <div class="arrow out" style="grid-column:1 / -1; grid-row: 3 / 4; @media (min-width: 860px) { grid-column: auto; grid-row: auto; }">
-                           <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                             <path d="M4 32h40M32 48l12-16L32 16" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-                           </svg>
-                         </div>
-                     </section>
-
-                    <!-- Enhancement rail -->
-                    <section class="rail max-w-3xl mx-auto" aria-label="Enhancement: Data Quality Engine">
-                      <div class="title font-bold text-base text-[var(--earth-dark)]">Enhancement: Data Quality Engine</div>
-                      <p class="lead" style="margin-top: 0; margin-bottom: 12px;">Engine accuracy is enhanced by ML models for data quality. Better data means a more reliable process.</p>
-                      <div class="body">
-                        <span class="chip">ML-driven data quality</span>
-                        <span class="chip">Cleansing &amp; bordereaux validation</span>
-                        <span class="chip">Validated parametric feeds (satellite, weather)</span>
-                      </div>
-                    </section>
-                </div>
-
-                <!-- Founder Expertise -->
-                <div class="mt-12 md:mt-16 max-w-4xl mx-auto p-6 md:p-8 bg-[var(--earth-light)] rounded-lg shadow-md">
-                     <h3 class="text-lg md:text-xl font-bold text-[var(--earth-dark)] mb-4">Founded on Market Expertise</h3>
-                     <p class="mb-4 text-[var(--earth-dark)] text-sm md:text-base">Built on direct experience within the Lloyd's market—essential for the GIA Engine.</p>
-                     <div class="founder-expertise-list space-y-2 md:space-y-3 text-[var(--earth-dark)] text-sm md:text-base">
-                        <p><strong>3 years</strong> insurance data analytics (Volante Global, Satinwood).</p>
-                        <p><strong>Lloyd's Lab Alumni</strong> (market network access).</p>
-                        <p>CAT exposure, bordereaux validation expertise.</p>
-                         <p>Processed <strong>£700K-£5M weekly</strong> CAT-exposed data.</p>
-                         <p>Python/SQL automation, compliance reporting skills.</p>
-                     </div>
-                </div>
+         <!-- Why Tech Matters for Investors -->
+        <section id="ai-matters" class="py-16 md:py-20 bg-white">
+          <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-10 md:mb-12">
+              <h2 class="text-2xl md:text-4xl font-bold">Why Our Technology Matters For You</h2>
+              <p class="mt-3 md:mt-4 max-w-3xl mx-auto text-[var(--text-light)] text-base md:text-lg">Most platforms use static data. We use machine learning on modern climate data. Here's the difference.</p>
             </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
+
+              <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <h4 class="font-bold text-lg text-[var(--earth-dark)] mb-3">Better Risk Selection</h4>
+                <p class="text-sm text-gray-700 mb-4">Our tech analyzes 1,000+ potential bonds, selecting the top 15-20 with optimal risk/return.</p>
+                <div class="bg-white p-3 rounded text-xs">
+                  <p class="font-semibold mb-1">Traditional:</p> <p class="text-gray-600">Manual review → subjective selection</p>
+                  <p class="font-semibold mt-2 mb-1">Gia Shield:</p> <p class="text-green-700">Automated scoring → data-driven selection</p>
+                </div>
+              </div>
+
+              <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <h4 class="font-bold text-lg text-[var(--earth-dark)] mb-3">Fairer Pricing</h4>
+                <p class="text-sm text-gray-700 mb-4">Dynamic pricing adjusts to real-time climate conditions, not outdated assumptions.</p>
+                <div class="bg-white p-3 rounded text-xs">
+                   <p class="font-semibold mb-1">Traditional:</p> <p class="text-gray-600">Static coupon (e.g., 6.5%)</p>
+                   <p class="font-semibold mt-2 mb-1">Gia Shield:</p> <p class="text-green-700">Optimized coupon (e.g., 7.2%) based on current risk</p>
+                </div>
+              </div>
+
+              <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <h4 class="font-bold text-lg text-[var(--earth-dark)] mb-3">Early Warnings</h4>
+                <p class="text-sm text-gray-700 mb-4">ML models detect elevated risk 48-72 hours before traditional monitoring.</p>
+                <div class="bg-white p-3 rounded text-xs">
+                  <p class="font-semibold mb-1">Traditional:</p> <p class="text-gray-600">Find out after trigger occurs</p>
+                  <p class="font-semibold mt-2 mb-1">Gia Shield:</p> <p class="text-green-700">Alert 2-3 days before potential trigger</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-12 max-w-4xl mx-auto p-6 md:p-8 bg-[var(--earth-light)] rounded-xl border-2 border-[var(--earth-dark)]">
+              <h4 class="text-lg md:text-xl font-bold text-center text-[var(--earth-dark)] mb-4">The Bottom Line</h4>
+              <p class="text-center text-sm md:text-base text-[var(--text-dark)]">Technology makes risk <strong>more transparent, better priced, and earlier detected</strong>. Our 98% probability is based on continuously improving models, not static tables.</p>
+
+              <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div class="bg-white p-4 rounded">
+                  <p class="font-semibold text-gray-700 mb-2">Traditional Cat Bonds</p>
+                  <p class="text-gray-600">Historical data → Static pricing → React to events</p>
+                </div>
+                <div class="bg-white p-4 rounded border-2 border-[var(--earth-dark)]">
+                  <p class="font-semibold text-[var(--earth-dark)] mb-2">Gia Shield Enhanced Bonds</p>
+                  <p class="text-[var(--text-dark)]">Real-time data → Dynamic pricing → Predict events</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
+
+
+        <!-- Our Technology Edge -->
+        <section id="edge" class="py-16 md:py-20 bg-gradient-to-b from-white to-gray-50">
+          <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-10 md:mb-12">
+              <h2 class="text-2xl md:text-4xl font-bold">Our Secret Sauce: The Enhancement Engine</h2>
+               <p class="mt-3 md:mt-4 max-w-3xl mx-auto text-[var(--text-light)] text-base md:text-lg">Like ScruB AI solves bordereaux data quality, we solve risk selection and pricing with technology. This is our defensible moat.</p>
+            </div>
+
+            <!-- The Five Engines/Components -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto mb-12 md:mb-16">
+
+              <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border-2 border-[var(--earth-dark)]">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="bg-[var(--earth-dark)] text-white w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold">1</div>
+                  <h3 class="text-lg md:text-xl font-bold text-[var(--earth-dark)]">Data Cleansing Engine</h3>
+                </div>
+                <p class="text-sm text-[var(--text-dark)] mb-4">AI validates bordereaux, flags errors, makes messy Lloyd's data retail-ready.</p>
+                <div class="bg-gray-50 p-3 rounded-lg text-xs space-y-1"><p><strong>Input:</strong> Syndicate bordereaux</p><p><strong>Output:</strong> Cleaned, validated risk data</p></div>
+                <div class="mt-4 p-2 bg-[var(--earth-light)] rounded border border-[#B2DFDB]"><p class="text-xs font-semibold text-[var(--earth-dark)]">Edge: Solves Lloyd's core data quality problem</p></div>
+              </div>
+
+              <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border-2 border-[var(--water)]">
+                <div class="flex items-center gap-3 mb-4">
+                   <div class="bg-[var(--water)] text-white w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold">2</div>
+                   <h3 class="text-lg md:text-xl font-bold text-[var(--water)]">ML Pricing Optimizer</h3>
+                </div>
+                <p class="text-sm text-[var(--text-dark)] mb-4">Analyzes 20+ years data, identifies mispricings, negotiates better coupons for retail (e.g., 7%+ vs 6.5%).</p>
+                <div class="bg-gray-50 p-3 rounded-lg text-xs space-y-1"><p><strong>Input:</strong> Cleaned data, CAT models</p><p><strong>Output:</strong> Optimized coupon rate</p></div>
+                <div class="mt-4 p-2 bg-blue-50 rounded border border-blue-200"><p class="text-xs font-semibold text-[var(--water)]">Edge: 15-20% better pricing accuracy</p></div>
+              </div>
+
+               <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border-2 border-gray-400">
+                <div class="flex items-center gap-3 mb-4">
+                   <div class="bg-gray-400 text-white w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold">3</div>
+                   <h3 class="text-lg md:text-xl font-bold text-gray-700">Geospatial Risk Modeler</h3>
+                </div>
+                <p class="text-sm text-[var(--text-dark)] mb-4">Maps risks geographically, ensures portfolio diversification, prevents concentration.</p>
+                <div class="bg-gray-50 p-3 rounded-lg text-xs space-y-1"><p><strong>Input:</strong> Asset location data</p><p><strong>Output:</strong> Diversification score, risk map</p></div>
+                <div class="mt-4 p-2 bg-gray-100 rounded border border-gray-300"><p class="text-xs font-semibold text-gray-600">Edge: Smarter portfolio construction</p></div>
+              </div>
+
+
+              <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border-2 border-[var(--fire)]">
+                <div class="flex items-center gap-3 mb-4">
+                   <div class="bg-[var(--fire)] text-white w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold">4</div>
+                   <h3 class="text-lg md:text-xl font-bold text-[var(--fire)]">Parametric Trigger Designer</h3>
+                </div>
+                <p class="text-sm text-[var(--text-dark)] mb-4">Converts subjective insurance terms to objective, measurable triggers (flood depth, wind speed).</p>
+                 <div class="bg-gray-50 p-3 rounded-lg text-xs space-y-1"><p><strong>Input:</strong> Policy terms</p><p><strong>Output:</strong> Clear, verifiable triggers</p></div>
+                 <div class="mt-4 p-2 bg-orange-50 rounded border border-orange-200"><p class="text-xs font-semibold text-[var(--fire)]">Edge: Enables transparency & fast payouts</p></div>
+              </div>
+
+               <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border-2 border-[var(--purple)] md:col-span-2">
+                 <div class="flex items-center gap-3 mb-4">
+                   <div class="bg-[var(--purple)] text-white w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold">5</div>
+                   <h3 class="text-lg md:text-xl font-bold text-[var(--purple)]">Portfolio Constructor & Monitoring</h3>
+                </div>
+                <p class="text-sm text-[var(--text-dark)] mb-4">ML selects optimal 15-20 bonds from 100+ options. Continuously monitors real-time trigger feeds (USGS, NOAA) and climate data, providing early warnings.</p>
+                <div class="bg-gray-50 p-3 rounded-lg text-xs space-y-1"><p><strong>Input:</strong> Priced bonds, risk data</p><p><strong>Output:</strong> Curated portfolio, real-time alerts</p></div>
+                 <div class="mt-4 p-2 bg-purple-50 rounded border border-purple-200"><p class="text-xs font-semibold text-[var(--purple)]">Edge: Data-driven selection + 48-72hr advance warnings</p></div>
+              </div>
+            </div>
+
+
+            <!-- The Tech Stack -->
+            <div class="max-w-4xl mx-auto mb-12 md:mb-16">
+              <h3 class="text-xl md:text-2xl font-bold text-center mb-6 md:mb-8">The Technology Stack</h3>
+              <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg border border-gray-200">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+                  <div>
+                    <h4 class="font-bold text-[var(--earth-dark)] mb-3">Data & Processing</h4>
+                    <ul class="space-y-1 text-gray-700 list-disc list-inside"><li>Python (pandas)</li><li>SQL (PostgreSQL)</li><li>API integrations</li><li>Bordereaux ETL</li></ul>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-[var(--earth-dark)] mb-3">Machine Learning</h4>
+                    <ul class="space-y-1 text-gray-700 list-disc list-inside"><li>Scikit-learn</li><li>TensorFlow</li><li>XGBoost</li><li>Time-series</li></ul>
+                  </div>
+                   <div>
+                    <h4 class="font-bold text-[var(--earth-dark)] mb-3">Platform & APIs</h4>
+                     <ul class="space-y-1 text-gray-700 list-disc list-inside"><li>React dashboards</li><li>Power BI</li><li>RESTful APIs</li><li>WebSockets</li></ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Why This is Defensible -->
+            <div class="max-w-5xl mx-auto">
+              <h3 class="text-xl md:text-2xl font-bold text-center mb-6 md:mb-8">Why Our Tech Moat is Defensible</h3>
+               <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                <div class="p-4 md:p-6 bg-[var(--earth-light)] rounded-lg border-2 border-[var(--earth-dark)]"><h4 class="font-bold text-lg text-[var(--earth-dark)] mb-2">Data Advantage</h4><p class="text-sm text-[var(--text-dark)]">3 yrs processing £Ms weekly = proprietary data. Lloyd's Lab = ongoing access.</p></div>
+                <div class="p-4 md:p-6 bg-[var(--earth-light)] rounded-lg border-2 border-[var(--earth-dark)]"><h4 class="font-bold text-lg text-[var(--earth-dark)] mb-2">Domain Expertise</h4><p class="text-sm text-[var(--text-dark)]">We bridge insurance + ML. Rare & valuable.</p></div>
+                <div class="p-4 md:p-6 bg-[var(--earth-light)] rounded-lg border-2 border-[var(--earth-dark)]"><h4 class="font-bold text-lg text-[var(--earth-dark)] mb-2">Network Effects</h4><p class="text-sm text-[var(--text-dark)]">More data → better models → better returns → more investors.</p></div>
+                <div class="p-4 md:p-6 bg-[var(--earth-light)] rounded-lg border-2 border-[var(--earth-dark)]"><h4 class="font-bold text-lg text-[var(--earth-dark)] mb-2">Time to Market</h4><p class="text-sm text-[var(--text-dark)]">18-24 month head start while others realize they need this tech.</p></div>
+              </div>
+            </div>
+
+            <!-- Founder Credibility -->
+            <div class="mt-12 md:mt-16 max-w-4xl mx-auto">
+              <div class="bg-gradient-to-r from-[var(--earth-dark)] to-[var(--water)] text-white p-6 md:p-8 rounded-xl shadow-xl">
+                <h3 class="text-xl md:text-2xl font-bold mb-6 text-center">Founded on Deep Technical + Insurance Expertise</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 class="font-bold mb-3 text-base md:text-lg">Insurance Domain</h4>
+                    <ul class="space-y-2 text-sm list-disc list-inside">
+                      <li>3 yrs bordereaux (Volante, Satinwood)</li>
+                      <li>Lloyd's Lab Alumni</li>
+                      <li>Processed £700K-£5M weekly CAT data</li>
+                      <li>Built automated validation scripts</li>
+                    </ul>
+                  </div>
+                   <div>
+                    <h4 class="font-bold mb-3 text-base md:text-lg">Technical Capabilities</h4>
+                    <ul class="space-y-2 text-sm list-disc list-inside">
+                      <li>Python/SQL/ML pipelines</li>
+                      <li>Power BI dashboards</li>
+                      <li>MSc Computer Science</li>
+                      <li>Compliance reporting</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="mt-6 text-center p-3 bg-white/10 rounded-lg">
+                  <p class="text-xs md:text-sm font-semibold">Inspired by ScruB AI's ML approach to data quality, applied to risk selection & pricing.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
 
         <!-- The Product Section -->
         <section id="product" class="py-16 md:py-20">
             <div class="container mx-auto px-4 sm:px-6">
                 <div class="text-center mb-10 md:mb-12">
-                    <h2 class="text-2xl md:text-4xl font-bold">The Gia Shield Investment</h2>
-                    <p class="mt-3 md:mt-4 max-w-3xl mx-auto text-[var(--text-light)] text-base md:text-lg">A transparent, accessible vehicle curated by our GIA Engine.</p>
+                    <h2 class="text-2xl md:text-4xl font-bold">The Gia Shield Investment Product</h2>
+                     <p class="mt-3 md:mt-4 max-w-3xl mx-auto text-[var(--text-light)] text-base md:text-lg">Enhanced Lloyd's green bonds, curated by our tech engine.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-                    <div>
-                        <h3 class="text-xl md:text-2xl font-bold mb-4 md:mb-6">Key Investment Details</h3>
+                    <!-- Added Border Here -->
+                    <div class="border-2 border-[var(--earth-dark)] p-6 rounded-lg">
+                        <h3 class="text-xl md:text-2xl font-bold mb-4 md:mb-6">Key Features</h3>
                         <ul class="space-y-3 list-disc list-inside text-sm md:text-base">
-                            <li><strong class="font-semibold">Target Investor:</strong> £60K-£150K earners.</li>
-                            <li><strong class="font-semibold">Minimum:</strong> £1,000.</li>
-                            <li><strong class="font-semibold">Target Return:</strong> 7% annually (paid monthly).</li>
-                            <li><strong class="font-semibold">Risk:</strong> Parametric triggers = clear risk.</li>
-                            <li><strong class="font-semibold">Transparency:</strong> GIA Engine data shows 98/2 probability.</li>
-                            <li><strong class="font-semibold">Distribution:</strong> Via Hargreaves Lansdown, Freetrade, etc.</li>
+                            <li><strong>Access:</strong> Lloyd's green bonds (£1,000 min)</li>
+                            <li><strong>Return:</strong> Target 7%+ annually (paid monthly)</li>
+                            <li><strong>Enhancement:</strong> ML pricing finds better rates</li>
+                            <li><strong>Risk:</strong> Transparent parametric triggers (98/2 prob.)</li>
+                            <li><strong>Fees:</strong> £0 for investors</li>
+                            <li><strong>Impact:</strong> Funds green infra + immediate disaster relief</li>
+                            <li><strong>Dashboard:</strong> Track portfolio, coupons, triggers</li>
                         </ul>
                     </div>
                     <div>
-                        <h3 class="text-xl md:text-2xl font-bold text-center mb-4">Our Elemental Portfolio</h3>
-                        <p class="text-center text-[var(--text-light)] mb-6 md:mb-8 text-sm md:text-base">Capital allocated across four categories.</p>
+                        <h3 class="text-xl md:text-2xl font-bold text-center mb-4">Indicative Portfolio Allocation</h3>
+                        <p class="text-center text-[var(--text-light)] mb-6 md:mb-8 text-sm md:text-base">Diversified across green sectors.</p>
                         <div class="chart-container h-64 sm:h-80 md:h-96">
                             <canvas id="portfolioChart"></canvas>
                         </div>
                     </div>
                 </div>
-                 <div class="mt-12 md:mt-16 text-center">
-                     <h3 class="text-xl md:text-2xl font-bold mb-2">Your money does good  no matter what.</h3>
-                     <p class="max-w-3xl mx-auto text-[var(--text-light)] text-sm md:text-base">Structured for positive impact in any scenario.</p>
-                     <div class="mt-6 md:mt-8 flex flex-col md:flex-row justify-center gap-4 md:gap-8">
-                        <div class="flex-1 p-4 md:p-6 bg-[var(--earth-light)] border border-[#B2DFDB] rounded-lg">
-                            <h4 class="font-bold text-[var(--earth-dark)] text-base md:text-lg">Best Case: Stability</h4>
-                            <p class="mt-1 md:mt-2 text-[var(--earth-dark)] text-sm md:text-base">No triggers. Earn 7% (paid monthly).</p>
-                        </div>
-                         <div class="flex-1 p-4 md:p-6 bg-[var(--earth-light)] border border-[#B2DFDB] rounded-lg">
-                            <h4 class="font-bold text-[var(--earth-dark)] text-base md:text-lg">Worst Case: Disaster</h4>
-                            <p class="mt-1 md:mt-2 text-[var(--earth-dark)] text-sm md:text-base">Trigger met. Money deployed immediately.</p>
-                        </div>
-                     </div>
-                </div>
+
                  <!-- Simulator -->
                 <div class="mt-12 md:mt-16 bg-white p-6 md:p-8 rounded-lg shadow-lg border border-gray-200 max-w-4xl mx-auto">
                   <h4 class="text-xl md:text-2xl font-bold text-center text-[var(--earth-dark)]">Calculate Your Potential Outcomes</h4>
@@ -620,105 +583,145 @@
         <section id="financials" class="py-16 md:py-20 bg-white">
           <div class="container mx-auto px-4 sm:px-6">
             <div class="text-center mb-10 md:mb-12">
-              <h2 class="text-2xl md:text-4xl font-bold">Zero Fees for Investors. Dual Revenue for Us.</h2>
-              <p class="mt-3 md:mt-4 max-w-3xl mx-auto text-[var(--text-light)] text-base md:text-lg">Paid by distribution partners & syndicates.</p>
+              <h2 class="text-2xl md:text-4xl font-bold">Zero Fees for Investors. Aligned Revenue for Us.</h2>
+               <p class="mt-3 md:mt-4 max-w-3xl mx-auto text-[var(--text-light)] text-base md:text-lg">We earn from syndicates and platforms, plus an outperformance split.</p>
             </div>
 
             <!-- Revenue Model Breakdown -->
-            <div class="max-w-5xl mx-auto mb-12 md:mb-16">
+            <div class="max-w-6xl mx-auto mb-12 md:mb-16">
               <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                <!-- Investors Pay Nothing -->
-                <div class="text-center p-6 md:p-8 bg-[var(--earth-light)] border-4 border-[var(--earth-dark)] rounded-lg shadow-xl order-1">
-                  <div class="text-4xl md:text-5xl font-extrabold text-[var(--earth-dark)] mb-3">£0</div>
-                  <h4 class="font-bold text-lg md:text-xl mb-3">Retail Investors</h4>
-                  <p class="text-xs md:text-sm text-[var(--text-dark)]">Zero management, performance, or platform fees.</p>
-                  <p class="text-xs text-[var(--text-light)] mt-3 italic">Keep full 7% coupon.</p>
-                </div>
-
-                <!-- Distribution Revenue -->
-                <div class="text-center p-6 md:p-8 bg-white border-2 border-[var(--water)] rounded-lg shadow-lg order-2 md:order-2">
-                  <div class="text-3xl md:text-4xl font-bold text-[var(--water)] mb-3">0.50%</div>
-                  <h4 class="font-bold text-lg md:text-xl mb-3">Distribution Partners</h4>
-                  <p class="text-xs md:text-sm text-[var(--text-dark)] mb-3">Pay platform fees.</p>
-                  <div class="text-left text-xs bg-gray-50 p-2 md:p-3 rounded">
-                    <p class="font-semibold mb-1">On £200M AUM:</p>
-                    <p><strong>£1.0M annual</strong></p>
-                  </div>
-                </div>
-
-                <!-- Syndicate Revenue -->
-                <div class="text-center p-6 md:p-8 bg-white border-2 border-[var(--earth-dark)] rounded-lg shadow-lg order-3 md:order-3">
+                <!-- Stream 1 -->
+                <div class="text-center p-6 md:p-8 bg-white border-2 border-[var(--earth-dark)] rounded-lg shadow-lg">
                   <div class="text-3xl md:text-4xl font-bold text-[var(--earth-dark)] mb-3">0.60%</div>
-                  <h4 class="font-bold text-lg md:text-xl mb-3">Lloyd's Syndicates</h4>
-                  <p class="text-xs md:text-sm text-[var(--text-dark)] mb-3">Pay arrangement fee.</p>
-                  <div class="text-left text-xs bg-gray-50 p-2 md:p-3 rounded">
-                    <p class="font-semibold mb-1">On £200M AUM:</p>
-                    <p><strong>£1.2M annual</strong></p>
-                  </div>
+                  <h4 class="font-bold text-lg md:text-xl mb-3">From Syndicates</h4>
+                  <p class="text-xs md:text-sm text-[var(--text-dark)] mb-3">Arrangement fee for bringing retail capacity.</p>
+                  <div class="text-left text-xs bg-gray-50 p-2 md:p-3 rounded"><p class="font-semibold mb-1">On £200M AUM:</p><p><strong>£1.2M annual</strong></p></div>
+                </div>
+                 <!-- Stream 2 -->
+                 <div class="text-center p-6 md:p-8 bg-white border-2 border-[var(--water)] rounded-lg shadow-lg">
+                  <div class="text-3xl md:text-4xl font-bold text-[var(--water)] mb-3">0.50%</div>
+                  <h4 class="font-bold text-lg md:text-xl mb-3">From Platforms</h4>
+                  <p class="text-xs md:text-sm text-[var(--text-dark)] mb-3">Platform fee for providing differentiated product.</p>
+                  <div class="text-left text-xs bg-gray-50 p-2 md:p-3 rounded"><p class="font-semibold mb-1">On £200M AUM:</p><p><strong>£1.0M annual</strong></p></div>
+                </div>
+                <!-- Stream 3 -->
+                 <div class="text-center p-6 md:p-8 bg-white border-2 border-[var(--fire)] rounded-lg shadow-lg">
+                  <div class="text-3xl md:text-4xl font-bold text-[var(--fire)] mb-3">80%</div>
+                  <h4 class="font-bold text-lg md:text-xl mb-3">Outperformance Split</h4>
+                  <p class="text-xs md:text-sm text-[var(--text-dark)] mb-3">We keep 80% of returns above 7% target.</p>
+                  <div class="text-left text-xs bg-gray-50 p-2 md:p-3 rounded"><p class="font-semibold mb-1">Example: 1% Outperformance:</p><p><strong>£1.6M additional</strong></p></div>
                 </div>
               </div>
 
-              <!-- Total Revenue -->
-              <div class="mt-8 text-center p-4 md:p-6 bg-gradient-to-r from-[var(--earth-dark)] to-[var(--water)] text-white rounded-lg shadow-xl">
-                <p class="text-base md:text-lg font-semibold mb-1 md:mb-2">Total Revenue at £200M AUM</p>
-                <p class="text-3xl md:text-4xl font-extrabold">£2.2 Million</p>
-                <p class="text-xs md:text-sm mt-2 opacity-90">(£1.0M dist. + £1.2M synd.)</p>
-                <p class="text-xs mt-3 bg-white/20 inline-block px-3 py-1 md:px-4 md:py-2 rounded">£183K/month</p>
+               <!-- Total Revenue -->
+              <div class="mt-8 text-center p-4 md:p-6 bg-gradient-to-r from-[var(--earth-dark)] to-[var(--water)] text-white rounded-lg shadow-xl max-w-4xl mx-auto">
+                <p class="text-base md:text-lg font-semibold mb-1 md:mb-2">Total Potential Revenue at £200M AUM (inc. 1% Outperformance)</p>
+                <p class="text-3xl md:text-4xl font-extrabold">£3.8 Million</p>
+                <p class="text-xs md:text-sm mt-2 opacity-90">(£2.2M Base + £1.6M Outperformance)</p>
               </div>
-            </div>
-
-            <!-- Why This Works -->
-            <div class="max-w-4xl mx-auto mb-12 md:mb-16">
-              <h3 class="text-xl md:text-2xl font-bold text-center mb-6">Why Everyone Wins</h3>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                 <div class="p-4 md:p-6 bg-gray-50 rounded-lg border border-gray-200"><h5 class="font-bold text-[var(--earth-dark)] mb-1 md:mb-2 text-sm md:text-base">Distribution:</h5><p class="text-xs md:text-sm">Get unique ESG product.</p></div>
-                 <div class="p-4 md:p-6 bg-gray-50 rounded-lg border border-gray-200"><h5 class="font-bold text-[var(--earth-dark)] mb-1 md:mb-2 text-sm md:text-base">Syndicates:</h5><p class="text-xs md:text-sm">Access retail capital cheaper.</p></div>
-                 <div class="p-4 md:p-6 bg-gray-50 rounded-lg border border-gray-200"><h5 class="font-bold text-[var(--earth-dark)] mb-1 md:mb-2 text-sm md:text-base">Investors:</h5><p class="text-xs md:text-sm">£0 fees, 7% return, impact.</p></div>
-                 <div class="p-4 md:p-6 bg-gray-50 rounded-lg border border-gray-200"><h5 class="font-bold text-[var(--earth-dark)] mb-1 md:mb-2 text-sm md:text-base">Gia Shield:</h5><p class="text-xs md:text-sm">Sustainable dual-revenue model.</p></div>
-              </div>
+               <p class="text-center text-sm mt-6 text-[var(--text-light)]">Retail investors pay £0.</p>
             </div>
 
             <!-- AUM Growth Projections -->
-            <h3 class="text-xl md:text-2xl font-bold text-center mb-4">Revenue Growth Path</h3>
-            <p class="text-center max-w-2xl mx-auto text-[var(--text-light)] mb-6 md:mb-8 text-sm md:text-base">Revenue compounds as AUM scales.</p>
-
-            <div class="max-w-3xl mx-auto mb-8">
+            <h3 class="text-xl md:text-2xl font-bold text-center mb-4">Revenue Growth Path (Base Fees Only)</h3>
+            <p class="text-center max-w-2xl mx-auto text-[var(--text-light)] mb-6 md:mb-8 text-sm md:text-base">Base revenue compounds as AUM scales.</p>
+             <div class="max-w-3xl mx-auto mb-8">
               <div class="grid grid-cols-3 gap-4 text-center">
                  <div class="p-3 md:p-4 bg-white rounded-lg shadow-sm border border-gray-200">
                   <p class="text-xs md:text-sm font-semibold text-[var(--text-light)]">Year 1</p>
                   <p class="text-xl md:text-2xl font-bold text-[var(--earth-dark)]">£10M</p>
                   <p class="text-xs text-[var(--text-light)] mt-1">AUM</p>
                   <p class="text-base md:text-lg font-bold text-[var(--fire)] mt-1 md:mt-2">£110K</p>
-                  <p class="text-xs text-[var(--text-light)]">Revenue</p>
+                  <p class="text-xs text-[var(--text-light)]">Base Revenue</p>
                 </div>
-
                  <div class="p-3 md:p-4 bg-white rounded-lg shadow-sm border border-gray-200">
                   <p class="text-xs md:text-sm font-semibold text-[var(--text-light)]">Year 2</p>
                   <p class="text-xl md:text-2xl font-bold text-[var(--earth-dark)]">£50M</p>
                   <p class="text-xs text-[var(--text-light)] mt-1">AUM</p>
                   <p class="text-base md:text-lg font-bold text-[var(--fire)] mt-1 md:mt-2">£550K</p>
-                  <p class="text-xs text-[var(--text-light)]">Revenue</p>
+                  <p class="text-xs text-[var(--text-light)]">Base Revenue</p>
                 </div>
-
                  <div class="p-3 md:p-4 bg-[var(--earth-light)] rounded-lg shadow-md border-2 border-[var(--earth-dark)]">
                   <p class="text-xs md:text-sm font-semibold text-[var(--earth-dark)]">Year 3</p>
                   <p class="text-xl md:text-2xl font-bold text-[var(--earth-dark)]">£200M</p>
                   <p class="text-xs text-[var(--text-dark)] mt-1">AUM Target</p>
                   <p class="text-base md:text-lg font-bold text-[var(--fire)] mt-1 md:mt-2">£2.2M</p>
-                  <p class="text-xs text-[var(--text-dark)]">£183K/mo</p>
+                  <p class="text-xs text-[var(--text-dark)]">Base Revenue</p>
                 </div>
               </div>
             </div>
-
             <div class="chart-container">
-              <canvas id="revenueChart" role="img" aria-label="Revenue growth projection"></canvas>
+              <canvas id="revenueChart" role="img" aria-label="Base revenue growth projection"></canvas>
             </div>
           </div>
         </section>
 
+        <!-- Competitive Landscape -->
+        <section id="competition" class="py-16 md:py-20 bg-gray-50">
+          <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-10 md:mb-12">
+              <h2 class="text-2xl md:text-4xl font-bold">Why Gia Shield Wins</h2>
+              <p class="mt-3 md:mt-4 max-w-3xl mx-auto text-[var(--text-light)] text-base md:text-lg">Comparing our tech-enhanced approach to existing alternatives.</p>
+            </div>
+
+            <div class="max-w-6xl mx-auto overflow-x-auto">
+               <table class="w-full bg-white rounded-lg shadow-lg overflow-hidden text-sm comparison-table border border-gray-200">
+                <thead class="bg-[var(--earth-dark)] text-white">
+                  <tr>
+                    <th class="p-3 md:p-4 text-left">Feature</th>
+                    <th class="p-3 md:p-4 text-center">UCITS Cat Bond Funds</th>
+                    <th class="p-3 md:p-4 text-center">Traditional Platforms</th>
+                    <th class="p-3 md:p-4 text-center bg-[var(--fire)]">Gia Shield</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                  <tr>
+                    <td class="p-3 md:p-4 font-semibold">Risk Selection</td>
+                    <td class="p-3 md:p-4 text-gray-600">Manual by fund managers</td>
+                    <td class="p-3 md:p-4 text-gray-600">Manual by underwriters</td>
+                    <td class="p-3 md:p-4 font-bold text-[var(--earth-dark)]">Tech-Enhanced (1,000+ analyzed)</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 md:p-4 font-semibold">Pricing Method</td>
+                    <td class="p-3 md:p-4 text-gray-600">Static actuarial tables</td>
+                    <td class="p-3 md:p-4 text-gray-600">Historical averages</td>
+                    <td class="p-3 md:p-4 font-bold text-[var(--earth-dark)]">ML Optimization (Dynamic)</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 md:p-4 font-semibold">Transparency</td>
+                    <td class="p-3 md:p-4 text-gray-600">Limited (fund level)</td>
+                    <td class="p-3 md:p-4 text-gray-600">Varies (often opaque)</td>
+                    <td class="p-3 md:p-4 font-bold text-[var(--earth-dark)]">High (Parametric + Dashboard)</td>
+                  </tr>
+                   <tr>
+                    <td class="p-3 md:p-4 font-semibold">Payout Speed</td>
+                    <td class="p-3 md:p-4 text-gray-600">Months (NAV adjustment)</td>
+                    <td class="p-3 md:p-4 text-gray-600">Months/Years (Claims process)</td>
+                    <td class="p-3 md:p-4 font-bold text-[var(--earth-dark)]">48 Hours (Parametric trigger)</td>
+                  </tr>
+                   <tr>
+                    <td class="p-3 md:p-4 font-semibold">Retail Fees</td>
+                    <td class="p-3 md:p-4 text-gray-600">1-2% Management Fee</td>
+                    <td class="p-3 md:p-4 text-gray-600">Varies (often high)</td>
+                    <td class="p-3 md:p-4 font-bold text-[var(--earth-dark)]">£0</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 md:p-4 font-semibold">Monthly Income</td>
+                    <td class="p-3 md:p-4 text-gray-600">No (NAV based)</td>
+                    <td class="p-3 md:p-4 text-gray-600">Rarely</td>
+                    <td class="p-3 md:p-4 font-bold text-[var(--earth-dark)]">Yes (Coupon paid monthly)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+
         <!-- Data Sources Section -->
         <section id="sources" class="py-16 md:py-20">
-            <div class="container mx-auto px-4 sm:px-6">
+
+             <div class="container mx-auto px-4 sm:px-6">
                 <div class="text-center mb-10 md:mb-12">
                     <h2 class="text-2xl md:text-4xl font-bold">Data Sources & Scrutinisation</h2>
                     <p class="mt-3 md:mt-4 max-w-3xl mx-auto text-[var(--text-light)] text-base md:text-lg">Key metrics based on public data.</p>
@@ -750,45 +753,41 @@
 
         <!-- Roadmap Section -->
         <section id="roadmap" class="py-16 md:py-20 bg-white">
-            <div class="container mx-auto px-4 sm:px-6">
+
+             <div class="container mx-auto px-4 sm:px-6">
                 <div class="text-center mb-10 md:mb-12">
                     <h2 class="text-2xl md:text-4xl font-bold">Our 24-Month Launch Plan</h2>
                     <p class="mt-3 md:mt-4 max-w-3xl mx-auto text-[var(--text-light)] text-base md:text-lg">A realistic, two-phase plan focused on regulatory approval and building a provable model.</p>
                 </div>
                 <div class="max-w-3xl mx-auto">
                     <div class="relative border-l-2 border-dashed border-[var(--water)] ml-4 pl-6 md:pl-8">
-                        <!-- Phase 1 -->
                         <div class="timeline-item mb-10 md:mb-12">
-                            <h4 class="text-base md:text-lg font-bold text-[var(--earth-dark)]">Phase 1: "Year 0" Build & Regulatory (Months 1-18)</h4>
+                            <h4 class="text-base md:text-lg font-bold text-[var(--earth-dark)]">Phase 1: Build & Regulatory (Months 1-18)</h4>
                             <p class="text-xs md:text-sm text-gray-500 mb-2">Secure Pre-Seed. Build. Await Authorisation.</p>
                             <ul class="list-disc list-inside text-[var(--text-dark)] space-y-1 text-sm md:text-base">
-                                <li>Secure pre-seed funding for legal, compliance, and 2-year runway.</li>
-                                <li>Submit application for <strong>Direct FCA Authorisation</strong>.</li>
-                                <li>Build GIA Engine, MVP platform, and risk dashboards.</li>
+                                <li>Secure £500k-£750k pre-seed funding.</li>
+                                <li>Submit application for Direct FCA Authorisation.</li>
+                                <li>Build Enhancement Engine & MVP platform.</li>
                                 <li>Develop investor waitlist (D2C marketing).</li>
-                                <li>Secure conditional syndicate & distribution partnerships.</li>
+                                <li>Secure conditional partnerships.</li>
                             </ul>
                         </div>
-
-                        <!-- Phase 2 -->
                          <div class="timeline-item mb-10 md:mb-12">
                             <h4 class="text-base md:text-lg font-bold text-[var(--earth-dark)]">Phase 2: Launch & Prove (Months 19-24)</h4>
                             <p class="text-xs md:text-sm text-gray-500 mb-2">Receive Authorisation. Launch D2C. Prove Model.</p>
                             <ul class="list-disc list-inside text-[var(--text-dark)] space-y-1 text-sm md:text-base">
-                                <li>Receive <strong>Direct FCA Authorisation</strong>.</li>
-                                <li>Launch D2C to waitlist; target £1M-£5M AUM.</li>
-                                <li>Prove model and gather performance data.</li>
-                                <li>Use live data to begin scaling conversations with major distribution partners.</li>
+                                <li>Receive Direct FCA Authorisation.</li>
+                                <li>Launch D2C to waitlist (£1M-£5M AUM target).</li>
+                                <li>Prove model & gather performance data.</li>
+                                <li>Use data for scaling conversations with platforms.</li>
                             </ul>
                         </div>
-
-                        <!-- Item 3 -->
                         <div class="timeline-item">
                             <h4 class="text-base md:text-lg font-bold text-[var(--earth-dark)]">"Year 2": Scale</h4>
-                            <p class="text-xs md:text-sm text-gray-500 mb-2">Phase 3</p>
+                            <p class="text-xs md:text-sm text-gray-500 mb-2">Post-Launch Expansion</p>
                             <ul class="list-disc list-inside text-[var(--text-dark)] space-y-1 text-sm md:text-base">
-                                <li>Onboard first major distribution partner (e.g., Freetrade).</li>
-                                <li>Scale AUM to £10M-£50M target.</li>
+                                <li>Onboard first major distribution partner.</li>
+                                <li>Scale AUM towards £10M-£50M target.</li>
                             </ul>
                         </div>
                     </div>
@@ -798,72 +797,77 @@
 
         <!-- Risk Disclosure -->
         <section id="risks" class="py-16 md:py-20 bg-red-50">
-          <div class="container mx-auto px-4 sm:px-6">
-            <div class="max-w-4xl mx-auto">
-              <div class="text-center mb-8">
-                <h2 class="text-2xl md:text-4xl font-bold text-red-900">Capital at Risk: What You Must Know</h2>
-                <p class="mt-3 md:mt-4 text-red-800 text-base md:text-lg">Radical transparency is key. Understand the risks.</p>
-              </div>
 
-              <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg border-2 border-red-300">
-                <div class="space-y-5 md:space-y-6">
-                  <div>
-                    <h4 class="font-bold text-base md:text-lg text-red-900 mb-1 md:mb-2"><strong>Warning:</strong> Potential for Total Loss</h4>
-                    <p class="text-xs md:text-sm text-gray-800">If a parametric trigger event occurs early (Month 1-2), loss could be 95% to 100%. Probability is low (2%), but severity is high.</p>
-                  </div>
-                  <div>
-                    <h4 class="font-bold text-base md:text-lg text-red-900 mb-1 md:mb-2"><strong>Warning:</strong> No FSCS Protection</h4>
-                    <p class="text-xs md:text-sm text-gray-800">Not covered like cash ISAs. No government compensation.</p>
-                  </div>
-                  <div>
-                    <h4 class="font-bold text-base md:text-lg text-red-900 mb-1 md:mb-2"><strong>Warning:</strong> Past Data Not Predictive</h4>
-                    <p class="text-xs md:text-sm text-gray-800">2% probability based on history. Climate change may alter patterns.</p>
-                  </div>
-                   <div>
-                    <h4 class="font-bold text-base md:text-lg text-red-900 mb-1 md:mb-2"><strong>Warning:</strong> Capital Locked for 12 Months</h4>
-                    <p class="text-xs md:text-sm text-gray-800">Principal cannot be withdrawn early (limited secondary market).</p>
-                  </div>
-                  <div>
-                    <h4 class="font-bold text-base md:text-lg text-red-900 mb-1 md:mb-2"><strong>Warning:</strong> Not Suitable for Everyone</h4>
-                    <p class="text-xs md:text-sm text-gray-800 mb-2">Do NOT invest if you need emergency funds, can't afford total loss, have <£50K liquid net worth, or for primary retirement savings.</p>
-                    <ul class="text-xs md:text-sm text-gray-800 list-disc list-inside space-y-1 ml-4">
-                      <li>Use for 5-10% of portfolio max.</li>
-                    </ul>
-                  </div>
-                  <div class="bg-yellow-50 p-3 md:p-4 rounded border border-yellow-300">
-                    <h4 class="font-bold text-yellow-900 mb-1 md:mb-2 text-sm md:text-base"><strong>Note:</strong> Suitability Check Required</h4>
-                    <p class="text-xs md:text-sm text-yellow-900">You must complete a questionnaire. Investment limits apply based on net worth/risk tolerance.</p>
-                  </div>
+             <div class="container mx-auto px-4 sm:px-6">
+                <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl md:text-4xl font-bold text-red-900">Capital at Risk: What You Must Know</h2>
+                    <p class="mt-3 md:mt-4 text-red-800 text-base md:text-lg">Radical transparency is key. Understand the risks.</p>
                 </div>
-              </div>
-              <div class="mt-8 text-center">
-                <p class="text-xs md:text-sm text-gray-600 italic">Conceptual presentation only. Not an offer. Subject to full FCA disclosures.</p>
-              </div>
+                <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg border-2 border-red-300">
+                    <div class="space-y-5 md:space-y-6">
+                    <div> <h4 class="font-bold text-base md:text-lg text-red-900 mb-1 md:mb-2"><strong>Warning:</strong> Potential for Total Loss</h4> <p class="text-xs md:text-sm text-gray-800">If a parametric trigger event occurs early (Month 1-2), loss could be 95% to 100%. Probability is low (2%), but severity is high.</p> </div>
+                    <div> <h4 class="font-bold text-base md:text-lg text-red-900 mb-1 md:mb-2"><strong>Warning:</strong> No FSCS Protection</h4> <p class="text-xs md:text-sm text-gray-800">Not covered like cash ISAs. No government compensation.</p> </div>
+                    <div> <h4 class="font-bold text-base md:text-lg text-red-900 mb-1 md:mb-2"><strong>Warning:</strong> Past Data Not Predictive</h4> <p class="text-xs md:text-sm text-gray-800">2% probability based on history. Climate change may alter patterns.</p> </div>
+                    <div> <h4 class="font-bold text-base md:text-lg text-red-900 mb-1 md:mb-2"><strong>Warning:</strong> Capital Locked for 12 Months</h4> <p class="text-xs md:text-sm text-gray-800">Principal cannot be withdrawn early (limited secondary market).</p> </div>
+                    <div> <h4 class="font-bold text-base md:text-lg text-red-900 mb-1 md:mb-2"><strong>Warning:</strong> Not Suitable for Everyone</h4> <p class="text-xs md:text-sm text-gray-800 mb-2">Do NOT invest if you need emergency funds, can't afford total loss, have <£50K liquid net worth, or for primary retirement savings.</p> <ul class="text-xs md:text-sm text-gray-800 list-disc list-inside space-y-1 ml-4"> <li>Use for 5-10% of portfolio max.</li> </ul> </div>
+                    <div class="bg-yellow-50 p-3 md:p-4 rounded border border-yellow-300"> <h4 class="font-bold text-yellow-900 mb-1 md:mb-2 text-sm md:text-base"><strong>Note:</strong> Suitability Check Required</h4> <p class="text-xs md:text-sm text-yellow-900">You must complete a questionnaire. Investment limits apply based on net worth/risk tolerance.</p> </div>
+                    </div>
+                </div>
+                <div class="mt-8 text-center"> <p class="text-xs md:text-sm text-gray-600 italic">Conceptual presentation only. Not an offer. Subject to full FCA disclosures.</p> </div>
+                </div>
             </div>
-          </div>
         </section>
 
         <!-- Contact / The Ask Section -->
         <section id="contact" class="py-16 md:py-20">
             <div class="container mx-auto px-4 sm:px-6">
-                 <div class="bg-white p-6 md:p-12 rounded-lg shadow-xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <div class="text-center md:text-left">
-                        <h2 class="text-2xl md:text-4xl font-bold text-[var(--earth-dark)]">Seeking a Co-Founder</h2>
-                         <p class="mt-3 md:mt-4 text-[var(--text-light)] text-base md:text-lg">Looking for a strategic partner to lead distribution.</p>
-                         <ul class="mt-4 md:mt-6 space-y-2 text-[var(--text-dark)] list-disc list-inside text-sm md:text-base text-left mx-auto md:mx-0 max-w-sm">
-                             <li>Fintech/wealth platform experience.</li>
-                             <li>Platform decision-maker relationships.</li>
-                             <li>Proven sales/BD skills.</li>
-                             <li>FCA retail regulation understanding.</li>
-                         </ul>
-                         <p class="mt-4 font-semibold text-sm md:text-base">Equity: 50/50 for established relationships, else negotiable.</p>
+                 <div class="bg-white p-6 md:p-12 rounded-lg shadow-xl grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                     <div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-[var(--earth-dark)]">Seeking a Co-Founder: Head of Distribution</h2>
+                        <p class="mt-3 md:mt-4 text-[var(--text-light)] text-base md:text-lg">We're building the tech engine. We need a partner to own fintech distribution and investor acquisition.</p>
+
+                        <div class="mt-6 grid grid-cols-1 gap-6">
+                            <div class="p-4 bg-[var(--earth-light)] rounded-lg">
+                            <h5 class="font-bold text-[var(--earth-dark)] mb-3 text-sm md:text-base">What We Bring (Technical/Product)</h5>
+                            <ul class="space-y-1 text-xs md:text-sm list-disc list-inside ml-4">
+                                <li>Enhancement Engine (Data, Pricing, Geo, Parametric)</li>
+                                <li>3 years bordereaux + CAT data expertise</li>
+                                <li>Lloyd's Lab alumni network</li>
+                                <li>Python/SQL platform build capability</li>
+                                <li>Syndicate data access and relationships</li>
+                            </ul>
+                            </div>
+
+                            <div class="p-4 bg-white border-2 border-[var(--fire)] rounded-lg">
+                            <h5 class="font-bold text-[var(--fire)] mb-3 text-sm md:text-base">What You Bring (Distribution/Growth)</h5>
+                            <ul class="space-y-1 text-xs md:text-sm list-disc list-inside ml-4">
+                                <li>Ex-Hargreaves/Freetrade/Nutmeg/InvestEngine</li>
+                                <li>Existing platform decision-maker relationships</li>
+                                <li>Proven BD/sales track record (closed deals)</li>
+                                <li>FCA retail investment expertise</li>
+                                <li>Marketing/investor acquisition experience</li>
+                            </ul>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 p-4 md:p-6 bg-gradient-to-r from-[var(--earth-dark)] to-[var(--water)] text-white rounded-lg">
+                            <p class="font-bold text-base md:text-lg mb-2">The Deal</p>
+                            <p class="text-sm">50/50 equity split for proven distribution capability. Otherwise negotiable.</p>
+                            <p class="text-xs mt-3 opacity-90">We build the tech. You get it to 10,000+ investors. Together we change climate finance.</p>
+                        </div>
                     </div>
-                     <div class="bg-gray-100 p-6 md:p-8 rounded-lg">
+
+                     <div class="bg-gray-100 p-6 md:p-8 rounded-lg mt-8 md:mt-0">
                         <h3 class="text-lg md:text-xl font-bold text-center">Contact Tendai Msipa</h3>
                         <div class="mt-4 md:mt-6 space-y-3 text-sm md:text-base">
                             <p><strong class="w-16 inline-block">Email:</strong> <a href="mailto:Tendaismsipa@gmail.com" class="text-[var(--water)] hover:underline break-all">Tendaismsipa@gmail.com</a></p>
                             <p><strong class="w-16 inline-block">Phone:</strong> <a href="tel:07482011076" class="text-[var(--water)] hover:underline">07482 011076</a></p>
                             <p><strong class="w-16 inline-block">LinkedIn:</strong> <a href="https://www.linkedin.com/in/tendai-msipa/" target="_blank" rel="noopener noreferrer" class="text-[var(--water)] hover:underline">Tendai Msipa</a></p>
+                        </div>
+                        <div class="mt-6 text-center">
+                            <p class="text-sm font-semibold">Seed funding needed: £500K-£750K</p>
+                            <p class="text-xs text-gray-600 mt-1">(Tech build, FCA authorization, 18-month runway)</p>
                         </div>
                     </div>
                 </div>
@@ -897,175 +901,37 @@
 
 
             // Market Growth Chart
-            const marketCtx = document.getElementById('marketGrowthChart').getContext('2d');
-            new Chart(marketCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['2022', '2025 (Projected)'],
-                    datasets: [{
-                        label: 'UCITS Cat Bond Funds AUM (€B)',
-                        data: [8.8, 17.7],
-                        backgroundColor: ['#A5D6A7', '#1B5E20'],
-                        borderColor: ['#81C784', '#003300'],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 20, // Give space for the top label
-                            title: {
-                                display: true,
-                                text: 'Assets Under Management (in Billions €)',
-                                color: chartFontColor,
-                                font: { size: 10 } // Smaller font on mobile
-                            },
-                            ticks: { color: chartFontColor, font: { size: 10 } },
-                            grid: { color: gridColor }
-                        },
-                        x: {
-                            ticks: { color: chartFontColor, font: { size: 10 } },
-                            grid: { color: 'transparent' }
-                        }
-                    },
-                     plugins: {
-                        legend: { display: false },
-                        tooltip: { enabled: false },
-                        datalabels: {
-                            anchor: 'end',
-                            align: 'top',
-                            formatter: (value) => `€${value}B`,
-                            color: chartFontColor,
-                            font: { weight: 'bold', size: 10 } // Smaller font on mobile
-                        }
-                    }
-                }
-            });
+            const marketCtx = document.getElementById('marketGrowthChart')?.getContext('2d');
+            if (marketCtx) {
+                new Chart(marketCtx, {
+                    type: 'bar', data: { labels: ['2022', '2025 (Projected)'], datasets: [{ data: [8.8, 17.7], backgroundColor: ['#A5D6A7', '#1B5E20'], borderColor: ['#81C784', '#003300'], borderWidth: 1 }] },
+                    options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, max: 20, title: { display: true, text: 'AUM (€ Billions)', color: chartFontColor, font: { size: 10 } }, ticks: { color: chartFontColor, font: { size: 10 } }, grid: { color: gridColor } }, x: { ticks: { color: chartFontColor, font: { size: 10 } }, grid: { color: 'transparent' } } }, plugins: { legend: { display: false }, tooltip: { enabled: false }, datalabels: { anchor: 'end', align: 'top', formatter: (v) => `€${v}B`, color: chartFontColor, font: { weight: 'bold', size: 10 } } } }
+                });
+            }
 
             // Portfolio Chart
-            const portfolioCtx = document.getElementById('portfolioChart').getContext('2d');
-            new Chart(portfolioCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Wind & Fire', 'Water', 'Earth', 'Innovation'],
-                    datasets: [{
-                        data: [40, 30, 20, 10],
-                        backgroundColor: ['#C15F3C', '#0077B6', '#004D40', '#B1ADA1'], // Fire, Water, Earth, Neutral
-                        hoverOffset: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                color: chartFontColor,
-                                boxWidth: 10,
-                                padding: 10, // Reduced padding
-                                font: { size: 10 } // Smaller font
-                            }
-                        },
-                         tooltip: { enabled: false },
-                        datalabels: {
-                            formatter: (value) => `${value}%`,
-                            color: '#ffffff',
-                             font: { weight: 'bold', size: 12 } // Adjusted size
-                        }
-                    }
-                }
-            });
+            const portfolioCtx = document.getElementById('portfolioChart')?.getContext('2d');
+             if (portfolioCtx) {
+                new Chart(portfolioCtx, {
+                    type: 'doughnut', data: { labels: ['Renewable Energy', 'Flood Protection', 'Critical Infra.', 'Climate Tech'], datasets: [{ data: [40, 30, 20, 10], backgroundColor: ['#C15F3C', '#0077B6', '#004D40', '#B1ADA1'], hoverOffset: 4 }] },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: chartFontColor, boxWidth: 10, padding: 10, font: { size: 10 } } }, tooltip: { enabled: false }, datalabels: { formatter: (v) => `${v}%`, color: '#ffffff', font: { weight: 'bold', size: 12 } } } }
+                });
+            }
 
             // Probability Chart
             const probabilityCtx = document.getElementById('probabilityChart')?.getContext('2d');
             if (probabilityCtx) {
-                new Chart(probabilityCtx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['No Trigger (98%)', 'Trigger Occurs (2%)'],
-                        datasets: [{
-                            data: [98, 2],
-                            backgroundColor: ['#004D40', '#C15F3C'],
-                            borderColor: '#fff',
-                            borderWidth: 2 // Reduced border
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: { color: '#212121', font: { size: 10 }, padding: 10 } // Smaller font/padding
-                            },
-                            datalabels: {
-                                color: '#fff',
-                                font: { weight: 'bold', size: 14 }, // Adjusted size
-                                formatter: (value) => value + '%',
-                                anchor: 'center', // Ensures the label is centered
-                                align: 'center', // Aligns the label inside the segment
-                            }
-                        }
-                    }
-                });
+                new Chart(probabilityCtx, { type: 'doughnut', data: { labels: ['No Trigger (98%)', 'Trigger Occurs (2%)'], datasets: [{ data: [98, 2], backgroundColor: ['#004D40', '#C15F3C'], borderColor: '#fff', borderWidth: 2 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#212121', font: { size: 10 }, padding: 10 } }, datalabels: { color: '#fff', font: { weight: 'bold', size: 14 }, formatter: (v) => v + '%' } } } });
             }
 
             // Revenue Chart
-            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
-            new Chart(revenueCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Yr 1: £10M', 'Yr 2: £50M', 'Yr 3: £200M'], // Shortened labels
-                    datasets: [ {
-                            label: 'Annual Revenue (£M)',
-                            data: [0.11, 0.55, 2.2],
-                            backgroundColor: '#004D40',
-                            yAxisID: 'yRevenue',
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                         yRevenue: {
-                            type: 'linear',
-                            position: 'left',
-                            beginAtZero: true,
-                            title: { display: true, text: 'Ann. Revenue (£M)', color: chartFontColor, font: {size: 10}}, // Smaller title
-                            ticks: { color: chartFontColor, font: {size: 10}},
-                            grid: { color: gridColor },
-                            max: 2.5
-                        },
-                        x: {
-                            ticks: { color: chartFontColor, font: {size: 10} }, // Smaller font
-                            grid: { color: 'transparent' }
-                        }
-                    },
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            enabled: true,
-                            callbacks: {
-                                label: function(context) {
-                                    return ` Revenue: £${context.parsed.y}M`;
-                                }
-                            }
-                        },
-                        datalabels: {
-                            anchor: 'end',
-                            align: 'top',
-                            color: chartFontColor,
-                             font: { weight: 'bold', size: 10 }, // Smaller font
-                            formatter: (value) => `£${value}M`
-                        }
-                    }
-                }
-            });
+            const revenueCtx = document.getElementById('revenueChart')?.getContext('2d');
+             if (revenueCtx) {
+                new Chart(revenueCtx, {
+                    type: 'bar', data: { labels: ['Yr 1: £10M', 'Yr 2: £50M', 'Yr 3: £200M'], datasets: [ { label: 'Base Revenue (£M)', data: [0.11, 0.55, 2.2], backgroundColor: '#004D40', yAxisID: 'yRevenue' }] },
+                    options: { responsive: true, maintainAspectRatio: false, scales: { yRevenue: { type: 'linear', position: 'left', beginAtZero: true, title: { display: true, text: 'Base Revenue (£M)', color: chartFontColor, font: {size: 10}}, ticks: { color: chartFontColor, font: {size: 10}}, grid: { color: gridColor }, max: 2.5 }, x: { ticks: { color: chartFontColor, font: {size: 10} }, grid: { color: 'transparent' } } }, plugins: { legend: { display: false }, tooltip: { enabled: true, callbacks: { label: (c) => ` Base Rev: £${c.parsed.y}M` } }, datalabels: { anchor: 'end', align: 'top', color: chartFontColor, font: { weight: 'bold', size: 10 }, formatter: (v) => `£${v}M` } } }
+                });
+            }
 
             // --- Investment Scenario Calculator ---
              const investmentAmountInput = document.getElementById('investment-amount');
@@ -1077,62 +943,50 @@
                  return new Intl.NumberFormat('en-GB', {style: 'currency', currency: 'GBP', maximumFractionDigits: 2}).format(n);
              }
 
-             simulateBtn.addEventListener('click', () => {
-                 const amt = parseFloat(investmentAmountInput.value);
-                 investmentAmountInput.classList.remove('border-red-500', 'ring-2', 'ring-red-300');
+             if(simulateBtn) {
+                 simulateBtn.addEventListener('click', () => {
+                     const amt = parseFloat(investmentAmountInput.value);
+                     investmentAmountInput.classList.remove('border-red-500', 'ring-2', 'ring-red-300');
 
-                 if (!amt || amt < 1000) {
-                   investmentAmountInput.classList.add('border-red-500', 'ring-2', 'ring-red-300');
-                   console.error("Minimum investment is £1,000");
-                   simulationResponseArea.classList.remove('hidden');
-                   simulationOutput.innerHTML = `<p class="text-center text-red-600 font-bold text-sm md:text-base">Please enter a minimum investment of £1,000.</p>`;
-                   return;
-                 }
+                     if (!amt || amt < 1000) {
+                       investmentAmountInput.classList.add('border-red-500', 'ring-2', 'ring-red-300');
+                       console.error("Minimum investment is £1,000");
+                       simulationResponseArea.classList.remove('hidden');
+                       simulationOutput.innerHTML = `<p class="text-center text-red-600 font-bold text-sm md:text-base">Please enter a minimum investment of £1,000.</p>`;
+                       return;
+                     }
 
-                 simulationResponseArea.classList.remove('hidden');
+                     simulationResponseArea.classList.remove('hidden');
+                     const monthlyCoupon = amt * 0.07 / 12; const annualCoupon = amt * 0.07;
+                     const monthsBeforeTrigger = 8; const couponsReceived = monthlyCoupon * monthsBeforeTrigger;
+                     const netLoss = amt - couponsReceived; const lossPercent = (netLoss / amt * 100).toFixed(1);
+                     const familiesHelped = Math.max(1, Math.floor(amt / 125));
 
-                 // Calculate outcomes
-                 const monthlyCoupon = amt * 0.07 / 12;
-                 const annualCoupon = amt * 0.07;
-
-                 // Worst case: trigger in month 8 (example)
-                 const monthsBeforeTrigger = 8;
-                 const couponsReceived = monthlyCoupon * monthsBeforeTrigger;
-                 const netLoss = amt - couponsReceived;
-                 const lossPercent = (netLoss / amt * 100).toFixed(1);
-
-                 // Impact calculation
-                 const familiesHelped = Math.max(1, Math.floor(amt / 125)); // Ensure at least 1 family
-
-                 simulationOutput.innerHTML = `
-                   <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                     <!-- Best Case -->
-                     <div class="p-4 md:p-6 bg-[var(--earth-light)] border-2 border-[var(--earth-dark)] rounded-lg">
-                       <h5 class="font-bold text-base md:text-xl text-[var(--earth-dark)] mb-3">Best Case (98% Probability)</h5>
-                       <div class="space-y-2 text-xs md:text-sm text-[var(--text-dark)]">
-                         <div class="flex justify-between"><span>Initial Investment:</span><span class="font-bold">${formatGBP(amt)}</span></div>
-                         <div class="flex justify-between"><span>Monthly Coupon:</span><span class="font-bold">${formatGBP(monthlyCoupon)} (x12)</span></div>
-                         <div class="flex justify-between"><span>Total Coupons:</span><span class="font-bold">${formatGBP(annualCoupon)}</span></div>
-                         <div class="flex justify-between"><span>Principal Returned:</span><span class="font-bold">${formatGBP(amt)}</span></div>
-                         <div class="flex justify-between font-bold text-sm md:text-base border-t pt-2 mt-2"><span>Net Return:</span><span>${formatGBP(annualCoupon)} (7.0% APR)</span></div>
-                       </div>
-                     </div>
-                     <!-- Worst Case -->
-                     <div class="p-4 md:p-6 bg-red-50 border-2 border-red-300 rounded-lg">
-                       <h5 class="font-bold text-base md:text-xl text-red-800 mb-3">Worst Case (2% Probability)</h5>
-                       <div class="space-y-2 text-xs md:text-sm text-red-800">
-                         <p class="text-xs text-center pb-1 italic">(Example: Trigger in Month 8)</p>
-                         <div class="flex justify-between"><span>Coupons Received:</span><span class="font-bold">${formatGBP(couponsReceived)}</span></div>
-                         <div class="flex justify-between"><span>Principal Lost:</span><span class="font-bold text-red-900">(${formatGBP(amt)})</span></div>
-                         <div class="flex justify-between font-bold text-sm md:text-base border-t pt-2 mt-2 border-red-200"><span>Net Loss:</span><span>${formatGBP(-netLoss)} (-${lossPercent}%)</span></div>
-                         <div class="mt-3 pt-3 border-t border-red-200">
-                           <p class="font-bold text-center text-sm md:text-base text-[var(--earth-dark)]">Your ${formatGBP(amt)} investment could help ${familiesHelped} families rebuild immediately.</p>
+                     simulationOutput.innerHTML = `
+                       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                         <div class="p-4 md:p-6 bg-[var(--earth-light)] border-2 border-[var(--earth-dark)] rounded-lg">
+                           <h5 class="font-bold text-base md:text-xl text-[var(--earth-dark)] mb-3">Best Case (98% Probability)</h5>
+                           <div class="space-y-2 text-xs md:text-sm text-[var(--text-dark)]">
+                             <div class="flex justify-between"><span>Initial Investment:</span><span class="font-bold">${formatGBP(amt)}</span></div>
+                             <div class="flex justify-between"><span>Monthly Coupon:</span><span class="font-bold">${formatGBP(monthlyCoupon)} (x12)</span></div>
+                             <div class="flex justify-between"><span>Total Coupons:</span><span class="font-bold">${formatGBP(annualCoupon)}</span></div>
+                             <div class="flex justify-between"><span>Principal Returned:</span><span class="font-bold">${formatGBP(amt)}</span></div>
+                             <div class="flex justify-between font-bold text-sm md:text-base border-t pt-2 mt-2"><span>Net Return:</span><span>${formatGBP(annualCoupon)} (7.0% APR)</span></div>
+                           </div>
                          </div>
-                       </div>
-                     </div>
-                   </div>
-                 `;
-             });
+                         <div class="p-4 md:p-6 bg-red-50 border-2 border-red-300 rounded-lg">
+                           <h5 class="font-bold text-base md:text-xl text-red-800 mb-3">Worst Case (2% Probability)</h5>
+                           <div class="space-y-2 text-xs md:text-sm text-red-800">
+                             <p class="text-xs text-center pb-1 italic">(Example: Trigger in Month 8)</p>
+                             <div class="flex justify-between"><span>Coupons Received:</span><span class="font-bold">${formatGBP(couponsReceived)}</span></div>
+                             <div class="flex justify-between"><span>Principal Lost:</span><span class="font-bold text-red-900">(${formatGBP(amt)})</span></div>
+                             <div class="flex justify-between font-bold text-sm md:text-base border-t pt-2 mt-2 border-red-200"><span>Net Loss:</span><span>${formatGBP(-netLoss)} (-${lossPercent}%)</span></div>
+                             <div class="mt-3 pt-3 border-t border-red-200"> <p class="font-bold text-center text-sm md:text-base text-[var(--earth-dark)]">Your ${formatGBP(amt)} investment could help ${familiesHelped} families rebuild immediately.</p> </div>
+                           </div>
+                         </div>
+                       </div>`;
+                 });
+             }
         });
     </script>
 </body>
