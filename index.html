@@ -76,45 +76,42 @@
         }
         
         /* New GIA Engine Diagram Styles (Adapted from user code) */
+        /* Mobile-first approach for the flow diagram */
         .flow {
-            display: grid;
-            grid-template-columns: 1fr;
+            display: flex;
+            flex-direction: column;
             gap: 16px;
-            align-items: stretch;
+            align-items: center;
         }
-        @media (min-width: 860px) {
-            .flow {
-                grid-template-columns: 1fr minmax(320px, 420px) 1fr;
-                gap: 18px 40px;
-            }
-        }
-        
+
         .flow-card {
             background: #ffffff;
             border: 1px solid var(--stroke);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             padding: 18px 18px 16px;
-            position: relative;
+            width: 100%;
+            max-width: 400px;
         }
+
         .flow-card h3 { margin: .1rem 0 .25rem; font-size: 18px; letter-spacing: .2px; }
-        .eyebrow { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-light); padding-left: 0; /* Remove padding for alignment */ }
-        .eyebrow .badge { display: none; /* Hide the badge element */ }
+        .eyebrow { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-light); }
         .lead { font-size: 14px; color: var(--text-light); margin-top: .25rem; }
 
         /* Specific cards */
         .supply {
             border-color: var(--earth-dark);
-            background: linear-gradient(180deg, #ffffff, #f7f9f7); /* Subtle gradient */
+            background: linear-gradient(180deg, #ffffff, #f7f9f7);
         }
         .engine {
             background: var(--earth-light);
             border-color: var(--earth-dark);
             border-width: 2px;
+            position: relative;
         }
         .demand {
             border-color: var(--water);
-             background: linear-gradient(180deg, #ffffff, #f7f7f9); /* Subtle gradient */
+            background: linear-gradient(180deg, #ffffff, #f7f7f9);
         }
 
         /* Pillars inside engine */
@@ -122,38 +119,95 @@
         .pillar {
             background: #ffffff;
             border: 1px solid rgba(0, 77, 64, .2);
-            border-radius: 12px; padding: 10px 12px;
+            border-radius: 12px; 
+            padding: 10px 12px;
             font-size: 14px;
             color: var(--text-dark);
         }
         .pillar b { display: block; font-weight: 700; color: var(--earth-dark); }
+
         .engine::before {
             content: "GIA INTELLIGENCE RISK ENGINE";
-            position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            position: absolute; 
+            top: -12px; 
+            left: 50%; 
+            transform: translateX(-50%);
             background: var(--earth-dark);
             color: white;
-            font-weight: 800; font-size: 12px; letter-spacing: .14em;
-            padding: 6px 12px; border-radius: 999px;
+            font-weight: 800; 
+            font-size: 10px; 
+            letter-spacing: .14em;
+            padding: 6px 12px; 
+            border-radius: 999px;
             box-shadow: 0 6px 16px rgba(0, 77, 64, .25);
             white-space: nowrap;
         }
-        
-        @media (max-width: 400px) {
-             .engine::before {
-                font-size: 10px;
-             }
+
+        /* Simple mobile arrows - vertical pointing down */
+        .arrow {
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            height: 40px;
         }
 
-        /* Arrows */
-        .arrow {
-            display: flex; align-items: center; justify-content: center;
+        .arrow svg { 
+            width: 32px; 
+            height: 32px; 
+            opacity: .7;
+            transform: rotate(90deg); /* Point downward */
         }
-        @media (max-width: 860px) {
-            .arrow { transform: rotate(90deg); }
-        }
-        .arrow svg { width: 72px; height: 72px; opacity: .9; filter: drop-shadow(0 8px 16px rgba(0,0,0,.1)); }
+
         .arrow.in svg path { stroke: var(--earth-dark); }
         .arrow.out svg path { stroke: var(--water); }
+
+        /* Desktop layout - only apply on larger screens */
+        @media (min-width: 860px) {
+            .flow {
+                display: grid;
+                grid-template-columns: 1fr minmax(320px, 420px) 1fr;
+                grid-template-rows: auto auto auto;
+                gap: 18px 40px;
+                align-items: stretch;
+            }
+            
+            .supply {
+                grid-column: 1;
+                grid-row: 1;
+            }
+            
+            .engine {
+                grid-column: 2;
+                grid-row: 1 / span 3;
+            }
+            
+            .demand {
+                grid-column: 3;
+                grid-row: 3;
+            }
+            
+            .arrow.in {
+                grid-column: 1;
+                grid-row: 2;
+                height: auto;
+            }
+            
+            .arrow.out {
+                grid-column: 3;
+                grid-row: 2;
+                height: auto;
+            }
+            
+            .arrow svg {
+                width: 72px;
+                height: 72px;
+                transform: none; /* Horizontal arrows on desktop */
+            }
+            
+            .engine::before {
+                font-size: 12px;
+            }
+        }
 
         /* Enhancement rail */
         .rail {
